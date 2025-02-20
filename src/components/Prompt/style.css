@@ -1,0 +1,28 @@
+.__prompt__ {
+  &.cursor::after {
+    content: "|";
+    background-color: var(--foreground);
+    color: var(--foreground);
+    animation: blink 1s steps(5, start) infinite;
+  }
+
+  .input {
+    text-transform: uppercase;
+  }
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}

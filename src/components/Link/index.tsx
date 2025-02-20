@@ -1,3 +1,5 @@
+import "./style.css";
+
 import React, { FC, useEffect } from "react";
 
 // enum LinkTargetType {

@@ -1,3 +1,5 @@
+import "./style.css";
+
 import React, { Component, RefObject, ReactElement } from "react";
 
 export interface BitmapProps {

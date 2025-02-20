@@ -1,0 +1,13 @@
+.phosphor {
+  padding: var(--lineheight);
+}
+
+.alert {
+  color: var(--alert);
+  text-shadow: var(--alert-glow);
+
+  & > span.cursor {
+    color: var(--alert);
+    background-color: rgba(var(--alert), 0.75);
+  }
+}

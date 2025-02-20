@@ -1,3 +1,5 @@
+import "./style.css";
+
 import React, { FC, useCallback, useEffect, useState } from "react";
 
 export interface ToggleState {

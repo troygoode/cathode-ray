@@ -1,3 +1,5 @@
+import "./style.css";
+
 import React, { FC } from "react";
 
 const Scanlines: FC = () => <section className="__scanlines__" />;

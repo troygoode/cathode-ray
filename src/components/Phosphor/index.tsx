@@ -1,5 +1,7 @@
 "use client";
 
+import "./style.css";
+
 import React, { Component, ReactElement } from "react";
 
 // modules

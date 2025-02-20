@@ -2,20 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Vga";
+  src: url("../assets/fonts/vga.woff") format("woff"),
+    url("../assets/fonts/vga.woff2") format("woff2"),
+    url("../assets/fonts/vga.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground: rgb(212, 249, 250);
+  --background: rgb(0, 12, 12);
+  --alert: rgb(255, 60, 0);
+
+  --scanlines-foreground: rgba($foreground, 0.1);
+  --scanlines-background: rgba($background, 0.5);
+
+  --foreground-glow: 0 0 5px rgba($foreground, 0.5);
+  --background-glow: 0 0 2px rgba($background, 0.5);
+  --alert-glow: 0 0 5px rgba($alert, 0.5);
+
+  --background-gradient: radial-gradient(
+    rgba($foreground, 0.15),
+    rgba($background, 1) 100%
+  );
+
+  --font-family: "Vga", Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  --scalefactor: 2;
+  --fontsize: 24px * $scalefactor;
+  --lineheight: 19px * $scalefactor;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: rgb(212, 249, 250);
+    --background: rgb(0, 12, 12);
   }
 }
 
+html,
 body {
+  font-family: var(--font-family);
+  font-size: var(--fontsize);
+  line-height: var(--lineheight);
   color: var(--foreground);
+
+  user-select: none;
+  text-shadow: var(--foreground-glow);
+
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  margin: 0;
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-image: var(--background-gradient);
+  background-attachment: fixed;
+  height: 100%;
+}
+
+@keyframes loadingdots {
+  0% {
+    content: "";
+  }
+
+  10% {
+    content: ".";
+  }
+
+  20% {
+    content: "..";
+  }
+
+  30% {
+    content: "...";
+  }
+
+  40% {
+    content: "....";
+  }
+
+  50% {
+    content: ".....";
+  }
+
+  60% {
+    content: "......";
+  }
+
+  70% {
+    content: ".......";
+  }
+
+  80% {
+    content: "........";
+  }
+
+  90% {
+    content: ".........";
+  }
+
+  100% {
+    content: "";
+  }
 }

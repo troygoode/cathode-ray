@@ -1,0 +1,10 @@
+.__teletype__ {
+  .cursor {
+    color: rgba(var(--background), 0.2);
+    background: var(--foreground);
+  }
+
+  .hidden {
+    visibility: hidden;
+  }
+}

@@ -1,0 +1,29 @@
+.__modal__ {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background: rgba(var(--background), 0.8);
+  color: var(--foreground);
+
+  .content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    padding: var(--lineheight) * 0.5;
+    transform: translate(-50%, -50%);
+    background: var(--foreground);
+    color: var(--background);
+    text-shadow: var(--background-glow);
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+body.static {
+  height: 100vh;
+  overflow-y: hidden;
+}

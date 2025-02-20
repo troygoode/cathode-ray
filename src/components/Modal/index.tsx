@@ -1,3 +1,5 @@
+import "./style.css";
+
 import React, { FC, useEffect, useCallback } from "react";
 
 export interface ModalProps {

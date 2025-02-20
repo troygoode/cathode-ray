@@ -1,3 +1,5 @@
+import "./style.css";
+
 import React, { FC, useCallback, useEffect, useRef } from "react";
 
 export interface StaticProps {
