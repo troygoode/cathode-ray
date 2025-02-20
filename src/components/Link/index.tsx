@@ -1,4 +1,4 @@
-import type { IScriptScreenContentLinkTarget } from "@/script-spec";
+import type { IScriptScreenContentLinkTarget } from "@/cassette";
 import "./style.css";
 
 import React, { FC, useEffect } from "react";

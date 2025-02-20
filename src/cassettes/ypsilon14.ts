@@ -1,6 +1,6 @@
-import type { IScript } from "@/script-spec";
+import type { ICassette } from "@/cassette";
 
-const json: IScript = {
+const json: ICassette = {
   config: {
     name: "The Haunting of Ypsilon-14 JSON data",
     author: "@redhg",

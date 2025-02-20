@@ -69,7 +69,7 @@ export interface IScriptDialog {
   content: string[];
 }
 
-export interface IScript {
+export interface ICassette {
   screens: IScriptScreen[];
   dialogs: IScriptDialog[];
   config?: {

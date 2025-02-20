@@ -1,7 +1,7 @@
 import type {
   IScriptScreenContentPromptCommand,
   IScriptScreenContentPromptCommandAction,
-} from "@/script-spec";
+} from "@/cassette";
 import "./style.css";
 
 import React, { FC, useEffect, useRef, RefObject, useState } from "react";

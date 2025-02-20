@@ -4,7 +4,7 @@ import styles from "./phosphor.module.css";
 
 import React, { Component, ReactElement } from "react";
 import type {
-  IScript,
+  ICassette,
   IScriptDialog,
   IScriptScreen,
   IScriptScreenContentBitmap,
@@ -15,9 +15,9 @@ import type {
   IScriptScreenContentText,
   IScriptScreenContentToggle,
   TScriptScreenContent,
-} from "@/script-spec";
-import cssClass from "@/lib/css-class";
-import createIdGenerator from "@/lib/id-generator";
+} from "@/cassette";
+import cssClass from "@/utils/css-class";
+import createIdGenerator from "@/utils/id-generator";
 
 import {
   AppStatus,
@@ -39,7 +39,7 @@ import Modal from "../Modal";
 import Scanlines from "../Scanlines";
 
 interface PhosphorProps {
-  json: IScript;
+  cassette: ICassette;
 }
 
 interface ILoadableElement {
@@ -55,13 +55,13 @@ function omitFalsy<T>(array: (T | undefined)[]): T[] {
 
 class Phosphor extends Component<PhosphorProps, AppState> {
   private _containerRef: React.RefObject<HTMLElement | null>;
-  private _json: IScript;
+  private _cassette: ICassette;
 
   constructor(props: PhosphorProps) {
     super(props);
 
     this._containerRef = React.createRef<HTMLElement>();
-    this._json = props.json;
+    this._cassette = props.cassette;
 
     this.state = {
       screens: [],
@@ -107,7 +107,7 @@ class Phosphor extends Component<PhosphorProps, AppState> {
 
   // private methods
   private _parseScreens(): void {
-    const screens = this._json.screens.map((element) => {
+    const screens = this._cassette.screens.map((element) => {
       return this._buildScreen(element);
     });
 
@@ -126,7 +126,7 @@ class Phosphor extends Component<PhosphorProps, AppState> {
   }
 
   private _parseDialogs(): void {
-    const dialogs = this._json.dialogs.map((element) => {
+    const dialogs = this._cassette.dialogs.map((element) => {
       return this._buildDialog(element);
     });
 

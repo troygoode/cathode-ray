@@ -1,12 +1,10 @@
 import Phosphor from "@/components/Phosphor";
-import type { IScript } from "@/script-spec";
+import * as cassetteLibrary from "@/cassettes";
+import loadCassettes from "@/utils/load-cassettes";
 
-// for different content, edit sample.json, or,
-// preferrably, create a new JSON and load it here
-import json from "@/data/ypsilon14";
-
-const _json: IScript = json;
+const cassettes = loadCassettes(cassetteLibrary);
+const cassette = cassettes[0].value;
 
 export default function Home() {
-  return <Phosphor json={_json} />;
+  return <Phosphor cassette={cassette} />;
 }
