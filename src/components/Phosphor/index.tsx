@@ -4,9 +4,6 @@ import "./style.css";
 
 import React, { Component, ReactElement } from "react";
 
-// modules
-import { nanoid } from "nanoid";
-
 // components
 import Teletype from "../Teletype";
 import Link from "../Link";
@@ -90,6 +87,14 @@ enum AppStatus {
   Active,
   Done,
 }
+
+function createIdGenerator() {
+  let i = 10000;
+  return () => {
+    return i++;
+  };
+}
+const generateId = createIdGenerator();
 
 function omitFalsy<T>(array: (T | undefined)[]): T[] {
   return array.filter((element) => element !== undefined) as T[];
@@ -343,7 +348,7 @@ class Phosphor extends Component<any, AppState> {
   private _generateScreenData(element: any): ScreenData | undefined {
     // TODO: build the data object based on the element type
     // e.g. typeof element === "string" --> create a new ScreenData Text object
-    const id = nanoid();
+    const id = generateId();
 
     // if an element has "load" property, its requires more work
     // to prepare so it's can't yet be considered "ready".
