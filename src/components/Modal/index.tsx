@@ -1,4 +1,4 @@
-import React, { SFC, useEffect, useCallback } from "react";
+import React, { FC, useEffect, useCallback } from "react";
 
 export interface ModalProps {
   text: string | string[];
@@ -6,7 +6,7 @@ export interface ModalProps {
   onClose: () => void;
 }
 
-const Modal: SFC<ModalProps> = (props) => {
+const Modal: FC<ModalProps> = (props) => {
   const { text, className, onClose } = props;
   const css = ["__modal__", className ? className : null].join(" ").trim();
 

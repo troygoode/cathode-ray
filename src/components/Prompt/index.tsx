@@ -1,4 +1,4 @@
-import React, { SFC, useEffect, useRef, RefObject, useState } from "react";
+import React, { FC, useEffect, useRef, RefObject, useState } from "react";
 
 export interface PromptProps {
   prompt?: string;
@@ -13,10 +13,11 @@ export interface PromptProps {
 
 export const PROMPT_DEFAULT = "$> ";
 
-const Prompt: SFC<PromptProps> = (props) => {
+const Prompt: FC<PromptProps> = (props) => {
   const { disabled, prompt, className, commands, onCommand, onRendered } =
     props;
-  const ref: RefObject<HTMLSpanElement> = useRef();
+  const span = document.createElement("span");
+  const ref: RefObject<HTMLSpanElement> = useRef(span);
   const css = [
     "__prompt__",
     disabled ? "disabled" : null,
@@ -35,7 +36,7 @@ const Prompt: SFC<PromptProps> = (props) => {
       return;
     }
 
-    const command = commands.find((element) => element.command === value);
+    const command = commands?.find((element) => element.command === value);
     setValue("");
 
     if (command) {

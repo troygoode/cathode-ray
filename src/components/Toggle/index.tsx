@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 
 export interface ToggleState {
   text: string;
@@ -12,7 +12,7 @@ export interface ToggleProps {
   onClick?: () => void;
 }
 
-const Toggle: SFC<ToggleProps> = (props) => {
+const Toggle: FC<ToggleProps> = (props) => {
   const { className, states, onRendered } = props;
   const css = ["__toggle__", className ? className : null].join(" ").trim();
 

@@ -21,9 +21,9 @@ interface TeletypeState {
 
 class Teletype extends Component<TeletypeProps, TeletypeState> {
   private _cursorInterval = 5;
-  private _animateTimerId: number = null;
-  private _cursorRef: React.RefObject<HTMLElement> = null;
-  private _cursorY: number = null;
+  private _animateTimerId: number | null = null;
+  private _cursorRef: React.RefObject<HTMLElement | null> | null = null;
+  private _cursorY: number | null = null;
 
   constructor(props: TeletypeProps) {
     super(props);
@@ -48,7 +48,7 @@ class Teletype extends Component<TeletypeProps, TeletypeState> {
     this._updateState = this._updateState.bind(this);
   }
 
-  public render(): ReactElement {
+  public render(): ReactElement | undefined {
     const { text, className } = this.props;
     const { char, done, active } = this.state;
 
@@ -57,7 +57,7 @@ class Teletype extends Component<TeletypeProps, TeletypeState> {
     const hidden = text.substr(char + 1); // to be rendered
 
     if (!active || done) {
-      return null;
+      return;
     }
 
     const css = ["__teletype__", className ? className : null].join(" ").trim();
@@ -169,7 +169,7 @@ class Teletype extends Component<TeletypeProps, TeletypeState> {
     // let nextIndex = index;
     let nextChar = char;
     let nextActive = active;
-    let nextDone = done;
+    let nextDone: boolean = done;
     let nextPaused = paused;
 
     // if we're not active, we are now!

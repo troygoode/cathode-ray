@@ -18,8 +18,8 @@ const TICK = 150;
 const STEPS = [0.01, 0.02, 0.03, 0.05, 0.08, 0.13, 0.21, 0.34, 0.55, 0.89, 1.0];
 
 class Bitmap extends Component<BitmapProps, BitmapState> {
-  private _canvasRef: RefObject<HTMLCanvasElement> = null;
-  private _animateTimerId: number = null;
+  private _canvasRef: RefObject<HTMLCanvasElement | null> | null = null;
+  private _animateTimerId: number | null = null;
   private _currentStep = 0;
 
   constructor(props: BitmapProps) {
@@ -53,8 +53,15 @@ class Bitmap extends Component<BitmapProps, BitmapState> {
 
   private _resampleImage(resolution: number): void {
     const { image } = this.state;
+    if (!this._canvasRef?.current) {
+      return;
+    }
+
     const canvas = this._canvasRef.current;
     const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      return;
+    }
 
     const w = image.width;
     const h = image.height;
@@ -95,6 +102,11 @@ class Bitmap extends Component<BitmapProps, BitmapState> {
   private _loadImage(): void {
     const { autocomplete, onComplete, src } = this.props;
     const { image } = this.state;
+
+    if (!this._canvasRef?.current) {
+      return;
+    }
+
     const canvas = this._canvasRef.current;
     const ctx = canvas.getContext("2d");
 

@@ -8,13 +8,12 @@ export interface StaticProps {
 }
 
 const TICK = 1000;
-const LIFESPAN_DEFAULT = 1000;
 
 const Static: FC<StaticProps> = (props) => {
-  let ref: React.RefObject<HTMLCanvasElement> = useRef();
+  const canvas = document.createElement("canvas");
+  let ref: React.RefObject<HTMLCanvasElement> = useRef(canvas);
   let time = 0;
-  let animateTimerId: number = null;
-  let lifespanTimerId: number = null;
+  let animateTimerId: number | null = null;
 
   const { className, onRendered, onClose } = props;
   const css = ["__static__", className ? className : null].join(" ").trim();
@@ -52,13 +51,17 @@ const Static: FC<StaticProps> = (props) => {
     animateTimerId = window.setInterval(noise, TICK);
   };
 
-  const noise = () => {
+  const noise = (): void => {
     if (!ref) {
       return;
     }
 
     const canvas = ref.current;
     const context = canvas.getContext("2d");
+
+    if (!context) {
+      return;
+    }
 
     const img = context.createImageData(canvas.width, canvas.height);
     const pix = img.data;
