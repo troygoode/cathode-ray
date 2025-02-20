@@ -1,0 +1,65 @@
+.scanlines {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+
+  overflow: hidden; /* only to animate the unique scanline */
+
+  &:before,
+  &:after {
+    display: block;
+    pointer-events: none;
+    content: "";
+    position: absolute;
+  }
+
+  /* unique scanline travelling on the screen */
+  &:before {
+    width: 100%;
+    height: 1px;
+    background: var(--foreground);
+    opacity: 0.2;
+
+    /* set z-index on 2147483648 or more to enable scanlines on Chrome fullscreen (doesn't work in Firefox or IE); */
+    z-index: 2147483649;
+    /* background: rgb(212, 249, 250); */
+    animation: scanline 6s linear infinite;
+  }
+
+  /* the scanlines, so! */
+  &:after {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* set z-index on 2147483648 or more to enable scanlines on Chrome fullscreen (doesn't work in Firefox or IE); */
+    z-index: 2147483648;
+
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 12, 12, 0.5) 50%,
+      rgba(212, 249, 250, 0.1) 51%
+    );
+    background-size: 100% 2px;
+    animation: none;
+  }
+}
+
+/* ANIMATE UNIQUE SCANLINE */
+@keyframes scanline {
+  0% {
+    transform: translate3d(0, 200000%, 0);
+    /* bottom: 0%; // to have a continuous scanline move, use this line (here in 0% step) instead of transform and write, in &:before, { position: absolute; bottom: 100%; } */
+  }
+}
+
+@keyframes scanlines {
+  0% {
+    background-position: 0 50%;
+    /* bottom: 0%; // to have a continuous scanline move, use this line (here in 0% step) instead of transform and write, in &:before, { position: absolute; bottom: 100%; } */
+  }
+}

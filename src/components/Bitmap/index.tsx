@@ -96,7 +96,9 @@ class Bitmap extends Component<BitmapProps, BitmapState> {
         this._currentStep++;
       } else {
         this._clearAnimationTimer();
-        onComplete && onComplete();
+        if (onComplete) {
+          onComplete();
+        }
       }
     }, TICK);
   }
@@ -132,7 +134,9 @@ class Bitmap extends Component<BitmapProps, BitmapState> {
           );
         } else {
           ctx.drawImage(image, 0, 0);
-          onComplete && onComplete();
+          if (onComplete) {
+            onComplete();
+          }
         }
       };
       image.src = src;

@@ -140,7 +140,7 @@ class Teletype extends Component<TeletypeProps, TeletypeState> {
     const { onNewLine } = this.props;
     // get the cursorRef
     const ref = this._cursorRef;
-    let y = this._cursorY;
+    const y = this._cursorY;
 
     if (ref && ref.current) {
       const node = ref.current;
@@ -148,7 +148,9 @@ class Teletype extends Component<TeletypeProps, TeletypeState> {
       if (y !== top) {
         // new line
         this._cursorY = top;
-        onNewLine && onNewLine();
+        if (onNewLine) {
+          onNewLine();
+        }
       }
     }
   }
@@ -172,7 +174,7 @@ class Teletype extends Component<TeletypeProps, TeletypeState> {
     let nextChar = char;
     let nextActive = active;
     let nextDone: boolean = done;
-    let nextPaused = paused;
+    const nextPaused = paused;
 
     // if we're not active, we are now!
     if (!nextActive) {
@@ -199,7 +201,9 @@ class Teletype extends Component<TeletypeProps, TeletypeState> {
 
   private _onComplete(): void {
     const { onComplete } = this.props;
-    onComplete && onComplete();
+    if (onComplete) {
+      onComplete();
+    }
   }
 }
 

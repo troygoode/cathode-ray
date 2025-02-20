@@ -1,6 +1,6 @@
 .__teletype__ {
   .cursor {
-    color: rgba(var(--background), 0.2);
+    color: rgba(var(--background_raw), 0.2);
     background: var(--foreground);
   }
 

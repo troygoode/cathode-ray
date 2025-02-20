@@ -1,8 +1,32 @@
 "use client";
 
-import "./style.css";
+import styles from "./phosphor.module.css";
 
 import React, { Component, ReactElement } from "react";
+import type {
+  IScript,
+  IScriptDialog,
+  IScriptScreen,
+  IScriptScreenContentBitmap,
+  IScriptScreenContentLink,
+  IScriptScreenContentLinkTarget,
+  IScriptScreenContentPrompt,
+  IScriptScreenContentPromptCommandAction,
+  IScriptScreenContentText,
+  IScriptScreenContentToggle,
+  TScriptScreenContent,
+} from "@/script-spec";
+import cssClass from "@/lib/css-class";
+import createIdGenerator from "@/lib/id-generator";
+
+import {
+  AppStatus,
+  ScreenDataType,
+  ScreenDataState,
+  ScreenType,
+  DialogType,
+} from "@/app-state-enums";
+import type { AppState, Screen, ScreenData, Dialog } from "@/app-state";
 
 // components
 import Teletype from "../Teletype";
@@ -11,102 +35,33 @@ import Text from "../Text";
 import Bitmap from "../Bitmap";
 import Prompt, { PROMPT_DEFAULT } from "../Prompt";
 import Toggle from "../Toggle";
-
 import Modal from "../Modal";
 import Scanlines from "../Scanlines";
 
-// for different content, edit sample.json, or,
-// preferrably, create a new JSON and load it here
-import json from "@/data/sample.json";
-
-interface AppState {
-  screens: Screen[];
-  dialogs: any[];
-  activeScreenId: string | null;
-  activeElementId: string | null; // which element, if any, is active
-  activeDialogId: string | null; // which element, if any, is active
-  loadingQueue: any[];
-  status: AppStatus;
-
-  renderScanlines: boolean; // should scanlines be enabled?
+interface PhosphorProps {
+  json: IScript;
 }
 
-enum DialogType {
-  Unknown = 0,
-  Alert, // simple message box
-  Confirm, // yes/no box; currently unsupported
-  Dialog, // has arbitrary content; currently unsupported
-}
-
-interface Dialog {
+interface ILoadableElement {
   id: string;
-  type: DialogType;
-
-  [key: string]: any; // arbitrary members
+  onLoad: () => void;
 }
 
-enum ScreenType {
-  Unknown = 0,
-  Screen,
-  Static,
-}
-
-enum ScreenDataType {
-  Unknown = 0,
-  Text,
-  Link,
-  Bitmap,
-  Prompt,
-  Toggle,
-}
-
-enum ScreenDataState {
-  Unloaded = 0,
-  Ready,
-  Active,
-  Done,
-}
-
-interface ScreenData {
-  id: string;
-  type: ScreenDataType;
-  state: ScreenDataState;
-
-  [key: string]: any; // arbitrary members
-}
-
-interface Screen {
-  id: string;
-  type: ScreenType;
-  content: ScreenData[];
-}
-
-enum AppStatus {
-  Unset = 0,
-  Ready,
-  Active,
-  Done,
-}
-
-function createIdGenerator() {
-  let i = 10000;
-  return () => {
-    return i++;
-  };
-}
 const generateId = createIdGenerator();
 
 function omitFalsy<T>(array: (T | undefined)[]): T[] {
   return array.filter((element) => element !== undefined) as T[];
 }
 
-class Phosphor extends Component<any, AppState> {
+class Phosphor extends Component<PhosphorProps, AppState> {
   private _containerRef: React.RefObject<HTMLElement | null>;
+  private _json: IScript;
 
-  constructor(props: any) {
+  constructor(props: PhosphorProps) {
     super(props);
 
     this._containerRef = React.createRef<HTMLElement>();
+    this._json = props.json;
 
     this.state = {
       screens: [],
@@ -130,7 +85,7 @@ class Phosphor extends Component<any, AppState> {
     const { activeScreenId, activeDialogId, renderScanlines } = this.state;
 
     return (
-      <div className="phosphor">
+      <div className={cssClass(styles, "phosphor")}>
         <section className={"__main__"} ref={this._containerRef}>
           {activeScreenId && this._renderScreen()}
         </section>
@@ -152,7 +107,7 @@ class Phosphor extends Component<any, AppState> {
 
   // private methods
   private _parseScreens(): void {
-    const screens = json.screens.map((element) => {
+    const screens = this._json.screens.map((element) => {
       return this._buildScreen(element);
     });
 
@@ -171,7 +126,7 @@ class Phosphor extends Component<any, AppState> {
   }
 
   private _parseDialogs(): void {
-    const dialogs = json.dialogs.map((element) => {
+    const dialogs = this._json.dialogs.map((element) => {
       return this._buildDialog(element);
     });
 
@@ -184,20 +139,14 @@ class Phosphor extends Component<any, AppState> {
     });
   }
 
-  private _buildDialog(src: any): Dialog {
-    const id = src.id || null;
+  private _buildDialog(src: IScriptDialog): Dialog {
+    const id = src.id;
     const type = this._getDialogType(src.type);
-
-    // TODO: support other dialog types
-    let content: any[] | null = null;
-    if (type === DialogType.Alert) {
-      content = src.content;
-    }
 
     return {
       id,
       type,
-      content,
+      content: src.content,
     };
   }
 
@@ -257,16 +206,11 @@ class Phosphor extends Component<any, AppState> {
     }
   }
 
-  private _buildScreen(src: any): Screen | undefined {
+  private _buildScreen(src: IScriptScreen): Screen {
     // try to parse & build the screen
-    const id = src.id || null;
+    const id = src.id;
     const type = this._getScreenType(src.type);
     const content = this._parseScreenContent(src.content).flat(); // flatten to one dimension
-
-    // if this screen is invalid for any reason, skip it
-    if (!id || !type) {
-      return;
-    }
 
     return {
       id,
@@ -333,7 +277,7 @@ class Phosphor extends Component<any, AppState> {
     return this.state.screens.find((element) => element.id === id);
   }
 
-  private _parseScreenContent(content: any[]): ScreenData[] {
+  private _parseScreenContent(content: TScriptScreenContent[]): ScreenData[] {
     if (!content) {
       return [];
     }
@@ -345,23 +289,27 @@ class Phosphor extends Component<any, AppState> {
     return omitFalsy(result);
   }
 
-  private _generateScreenData(element: any): ScreenData | undefined {
+  private _generateScreenData(
+    element: TScriptScreenContent
+  ): ScreenData | undefined {
     // TODO: build the data object based on the element type
     // e.g. typeof element === "string" --> create a new ScreenData Text object
     const id = generateId();
+    let state = ScreenDataState.Ready;
+    let onLoad: (() => void) | undefined = undefined;
 
     // if an element has "load" property, its requires more work
     // to prepare so it's can't yet be considered "ready".
-    const onLoad = element.onLoad || null;
-    // if an element requires more loading, we'll shove its id in the queue
-    if (onLoad) {
+    if (element.hasOwnProperty("onLoad")) {
+      const loadable = element as unknown as ILoadableElement;
       const loadingQueue = [...this.state.loadingQueue];
-      loadingQueue.push(element.id);
+      loadingQueue.push(loadable.id);
       this.setState({
         loadingQueue,
       });
+      state = ScreenDataState.Unloaded;
+      onLoad = loadable.onLoad;
     }
-    const state = onLoad ? ScreenDataState.Unloaded : ScreenDataState.Ready;
 
     // text-only elements can be added as strings in the JSON data; they don't need any object wrappers
     if (typeof element === "string") {
@@ -381,54 +329,59 @@ class Phosphor extends Component<any, AppState> {
 
     switch (element.type.toLowerCase()) {
       case "text":
+        const text = element as unknown as IScriptScreenContentText;
         return {
           id,
           type: ScreenDataType.Text,
-          text: element.text,
-          className: element.className,
+          text: text.text,
+          className: text.className,
           state,
           onLoad,
         };
 
       case "link":
+        const link = element as unknown as IScriptScreenContentLink;
         return {
           id,
           type: ScreenDataType.Link,
-          target: element.target,
-          className: element.className,
-          text: element.text,
+          target: link.target,
+          className: link.className,
+          text: link.text,
           state,
           onLoad,
         };
 
       case "image":
       case "bitmap":
+        const bitmap = element as unknown as IScriptScreenContentBitmap;
         return {
           id,
           type: ScreenDataType.Bitmap,
-          src: element.src,
-          alt: element.alt,
-          className: element.className,
+          src: bitmap.src,
+          alt: bitmap.alt,
+          className: bitmap.className,
           state,
           onLoad,
         };
 
       case "prompt":
+        const prompt = element as unknown as IScriptScreenContentPrompt;
         return {
           id,
           type: ScreenDataType.Prompt,
-          prompt: element.prompt || PROMPT_DEFAULT,
-          className: element.className,
-          commands: element.commands,
+          prompt: prompt.prompt || PROMPT_DEFAULT,
+          className: prompt.className,
+          commands: prompt.commands,
           state,
           onLoad,
         };
 
       case "toggle":
+        const toggle = element as unknown as IScriptScreenContentToggle;
         return {
           id,
           type: ScreenDataType.Toggle,
-          states: element.states,
+          states: toggle.states,
           state,
         };
 
@@ -437,7 +390,9 @@ class Phosphor extends Component<any, AppState> {
     }
   }
 
-  private _parseScreenContentElement(element: any): any {
+  private _parseScreenContentElement(
+    element: TScriptScreenContent
+  ): TScriptScreenContent | string[] {
     // if the element is a string, we'll want to
     // split it into chunks based on the new line character
     if (typeof element === "string") {
@@ -450,7 +405,7 @@ class Phosphor extends Component<any, AppState> {
 
   // based on the current active ScreenData, render the corresponding active element
   private _renderActiveElement(
-    element: any,
+    element: ScreenData,
     key: number
   ): ReactElement | undefined {
     const type = element.type;
@@ -479,9 +434,10 @@ class Phosphor extends Component<any, AppState> {
 
     // the toggle gets its text from the states array
     if (type === ScreenDataType.Toggle) {
-      const text = element.states.find(
-        (item: any) => item.active === true
-      ).text;
+      const toggle = element as unknown as IScriptScreenContentToggle;
+      const text =
+        toggle.states.find((item) => item.active === true)?.text ||
+        toggle.states[0].text;
       const handleRendered = () => this._activateNextScreenData();
       return (
         <Teletype
@@ -515,7 +471,7 @@ class Phosphor extends Component<any, AppState> {
 
   // renders the final, interactive element to the screen
   private _renderStaticElement(
-    element: any,
+    element: ScreenData,
     key: number
   ): ReactElement | undefined {
     const className = element.className || "";
@@ -732,25 +688,26 @@ class Phosphor extends Component<any, AppState> {
     });
   }
 
-  private _handlePromptCommand(command: string, args?: any) {
-    // handle the various commands
-    if (!args || !args.type) {
-      // display an error message
-      return;
-    }
-
-    switch (args.type) {
+  private _handlePromptCommand(
+    command: string,
+    action: IScriptScreenContentPromptCommandAction
+  ) {
+    switch (action.type) {
       case "link":
         // fire the change screen event
-        args.target && this._changeScreen(args.target);
+        if (action.target) {
+          this._changeScreen(action.target);
+        }
         break;
 
       case "dialog":
-        args.target && this._toggleDialog(args.target);
+        if (action.target) {
+          this._toggleDialog(action.target);
+        }
         break;
 
       case "console":
-        console.log(command, args);
+        console.log(command, action);
         break;
 
       default:
@@ -787,7 +744,10 @@ class Phosphor extends Component<any, AppState> {
     // }
   }
 
-  private _handleLinkClick(target: string | any[], shiftKey: boolean): void {
+  private _handleLinkClick(
+    target: string | IScriptScreenContentLinkTarget[],
+    shiftKey: boolean
+  ): void {
     // if it's a string, it's a screen
     if (typeof target === "string") {
       this._changeScreen(target);
@@ -795,7 +755,7 @@ class Phosphor extends Component<any, AppState> {
     }
 
     // otherwise, it's a LinkTarget array
-    const linkTarget = (target as any[]).find(
+    const linkTarget = (target as IScriptScreenContentLinkTarget[]).find(
       (element) => element.shiftKey === shiftKey
     );
     if (linkTarget) {

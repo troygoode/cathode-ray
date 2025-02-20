@@ -13,11 +13,11 @@ const TICK = 1000;
 
 const Static: FC<StaticProps> = (props) => {
   const canvas = document.createElement("canvas");
-  let ref: React.RefObject<HTMLCanvasElement> = useRef(canvas);
+  const ref: React.RefObject<HTMLCanvasElement> = useRef(canvas);
   let time = 0;
   let animateTimerId: number | null = null;
 
-  const { className, onRendered, onClose } = props;
+  const { className, onClose } = props;
   const css = ["__static__", className ? className : null].join(" ").trim();
 
   // add a keyhandler
@@ -30,7 +30,9 @@ const Static: FC<StaticProps> = (props) => {
       switch (key) {
         case "enter":
         case "escape":
-          onClose && onClose();
+          if (onClose) {
+            onClose();
+          }
           break;
 
         default:

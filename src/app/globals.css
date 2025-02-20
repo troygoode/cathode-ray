@@ -12,27 +12,31 @@
 }
 
 :root {
-  --foreground: rgb(212, 249, 250);
-  --background: rgb(0, 12, 12);
-  --alert: rgb(255, 60, 0);
+  --foreground_raw: 212, 249, 250;
+  --background_raw: 0, 12, 12;
+  --alert_raw: 255, 60, 0;
 
-  --scanlines-foreground: rgba($foreground, 0.1);
-  --scanlines-background: rgba($background, 0.5);
+  --foreground: rgb(var(--foreground_raw));
+  --background: rgb(var(--background_raw));
+  --alert: rgb(var(--alert_raw));
 
-  --foreground-glow: 0 0 5px rgba($foreground, 0.5);
-  --background-glow: 0 0 2px rgba($background, 0.5);
-  --alert-glow: 0 0 5px rgba($alert, 0.5);
+  --scanlines-foreground: rgba(var(--foreground_raw), 0.1);
+  --scanlines-background: rgba(var(--background_raw), 0.5);
+
+  --foreground-glow: 0 0 5px rgba(var(--foreground_raw), 0.5);
+  --background-glow: 0 0 2px rgba(var(--background_raw), 0.5);
+  --alert-glow: 0 0 5px rgba(var(--alert_raw), 0.5);
 
   --background-gradient: radial-gradient(
-    rgba($foreground, 0.15),
-    rgba($background, 1) 100%
+    rgba(var(--foreground_raw), 0.15),
+    rgba(var(--background_raw), 1) 100%
   );
 
   --font-family: "Vga", Menlo, Monaco, Consolas, "Courier New", monospace;
 
   --scalefactor: 2;
-  --fontsize: 24px * $scalefactor;
-  --lineheight: 19px * $scalefactor;
+  --fontsize: calc(24px * var(--scalefactor));
+  --lineheight: calc(19px * var(--scalefactor));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -107,5 +111,15 @@ body {
 
   100% {
     content: "";
+  }
+}
+
+.alert {
+  color: var(--alert);
+  text-shadow: var(--alert-glow);
+
+  & > span.cursor {
+    color: var(--alert);
+    background-color: rgba(var(--alert), 0.75);
   }
 }

@@ -27,7 +27,9 @@ const Modal: FC<ModalProps> = (props) => {
       switch (key) {
         case "enter":
         case "escape":
-          onClose && onClose();
+          if (onClose) {
+            onClose();
+          }
           break;
 
         default:

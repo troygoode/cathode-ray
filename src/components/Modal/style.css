@@ -4,14 +4,14 @@
   width: 100vw;
   top: 0;
   left: 0;
-  background: rgba(var(--background), 0.8);
+  background: rgba(var(--background_raw), 0.8);
   color: var(--foreground);
 
   .content {
     position: fixed;
     top: 50%;
     left: 50%;
-    padding: var(--lineheight) * 0.5;
+    padding: calc(var(--lineheight) * 0.5);
     transform: translate(-50%, -50%);
     background: var(--foreground);
     color: var(--background);

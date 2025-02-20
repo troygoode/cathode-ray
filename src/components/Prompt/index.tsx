@@ -1,14 +1,21 @@
+import type {
+  IScriptScreenContentPromptCommand,
+  IScriptScreenContentPromptCommandAction,
+} from "@/script-spec";
 import "./style.css";
 
 import React, { FC, useEffect, useRef, RefObject, useState } from "react";
 
 export interface PromptProps {
   prompt?: string;
-  commands?: any[];
+  commands?: IScriptScreenContentPromptCommand[];
   className?: string;
   disabled?: boolean;
 
-  onCommand?: (command: string, action: string) => void;
+  onCommand?: (
+    command: string,
+    action: IScriptScreenContentPromptCommandAction
+  ) => void;
   onEscape?: () => void;
   onRendered?: () => void;
 }
@@ -57,7 +64,9 @@ const Prompt: FC<PromptProps> = (props) => {
     const key = e.key.toLowerCase();
     switch (key) {
       case "backspace":
-        value.length && setValue(value.slice(0, -1));
+        if (value.length) {
+          setValue(value.slice(0, -1));
+        }
         break;
 
       case "enter":
@@ -77,7 +86,9 @@ const Prompt: FC<PromptProps> = (props) => {
   // render effects
   useEffect(() => {
     // mount
-    onRendered && onRendered();
+    if (onRendered) {
+      onRendered();
+    }
     document.addEventListener("keydown", handleKeyDown);
 
     // unmount
