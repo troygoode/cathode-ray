@@ -126,13 +126,13 @@ class Phosphor extends Component<PhosphorProps, AppState> {
   }
 
   private _parseDialogs(): void {
+    if (!this._cassette.dialogs?.length) {
+      return;
+    }
+
     const dialogs = this._cassette.dialogs.map((element) => {
       return this._buildDialog(element);
     });
-
-    if (!dialogs.length) {
-      return;
-    }
 
     this.setState({
       dialogs,
@@ -755,9 +755,9 @@ class Phosphor extends Component<PhosphorProps, AppState> {
     }
 
     // otherwise, it's a LinkTarget array
-    const linkTarget = (target as IScriptScreenContentLinkTarget[]).find(
-      (element) => element.shiftKey === shiftKey
-    );
+    const targets = Array.isArray(target) ? target : [target];
+    const linkTarget = targets.find((element) => !element.shiftKey || shiftKey);
+
     if (linkTarget) {
       // perform the appropriate action based on type
       // TODO: type-check the object

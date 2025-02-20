@@ -1,7 +1,7 @@
 import type { ICassette } from "@/cassette";
 
 const json: ICassette = {
-  config: {
+  meta: {
     name: "Sample JSON data",
     author: "@redhg",
   },

@@ -5,11 +5,8 @@ export interface ICassetteEntry {
   value: ICassette;
 }
 
-export default function loadCassettes(foo: object): ICassetteEntry[] {
-  return Object.entries(foo).map(([key, value]): ICassetteEntry => {
-    return {
-      key,
-      value: value as ICassette,
-    };
+export default function loadCassettes(foo: object): ICassette[] {
+  return Object.entries(foo).map(([, value]): ICassette => {
+    return value as ICassette;
   });
 }

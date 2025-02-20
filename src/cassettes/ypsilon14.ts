@@ -1,7 +1,7 @@
 import type { ICassette } from "@/cassette";
 
 const json: ICassette = {
-  config: {
+  meta: {
     name: "The Haunting of Ypsilon-14 JSON data",
     author: "@redhg",
     comment:

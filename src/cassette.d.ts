@@ -31,16 +31,19 @@ export interface IScriptScreenContentToggle {
 }
 
 export interface IScriptScreenContentLinkTarget {
+  type: "dialog" | "link" | "href";
   target: string;
-  type: "dialog" | "link";
-  shiftKey: boolean;
+  shiftKey?: boolean;
 }
 
 export interface IScriptScreenContentLink {
   type: "link";
   text: string;
   className?: string;
-  target: string | IScriptScreenContentLinkTarget[];
+  target:
+    | string
+    | IScriptScreenContentLinkTarget[]
+    | IScriptScreenContentLinkTarget;
 }
 
 export interface IScriptScreenContentText {
@@ -71,10 +74,10 @@ export interface IScriptDialog {
 
 export interface ICassette {
   screens: IScriptScreen[];
-  dialogs: IScriptDialog[];
-  config?: {
+  dialogs?: IScriptDialog[];
+  meta: {
     name: string;
-    author: string;
+    author?: string;
     comment?: string;
   };
 }

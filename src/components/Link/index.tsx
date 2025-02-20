@@ -1,4 +1,5 @@
 import type { IScriptScreenContentLinkTarget } from "@/cassette";
+import NextLink from "next/link";
 import "./style.css";
 
 import React, { FC, useEffect } from "react";
@@ -15,7 +16,7 @@ export interface LinkProps {
   onRendered?: () => void;
 }
 
-const Link: FC<LinkProps> = (props) => {
+const CustomLink: FC<LinkProps> = (props) => {
   const { text, target, className, onClick, onRendered } = props;
   const css = ["__link__", className ? className : null].join(" ").trim();
 
@@ -54,6 +55,29 @@ const Link: FC<LinkProps> = (props) => {
       {text}
     </span>
   );
+};
+
+const Link: FC<LinkProps> = (props) => {
+  const targets = Array.isArray(props.target) ? props.target : [props.target];
+  const target = targets[0];
+
+  if (
+    target.hasOwnProperty("type") &&
+    (target as IScriptScreenContentLinkTarget).type === "href"
+  ) {
+    const { text, className } = props;
+    const css = ["__link__", className ? className : null].join(" ").trim();
+    return (
+      <NextLink
+        href={(target as IScriptScreenContentLinkTarget).target}
+        className={css}
+      >
+        {text}
+      </NextLink>
+    );
+  } else {
+    return <CustomLink {...props} />;
+  }
 };
 
 export default Link;
