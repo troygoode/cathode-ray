@@ -2,7 +2,23 @@ export interface IScriptScreenContentBitmap {
   type: "bitmap";
   src: string;
   alt?: string;
-  className?: string;
+  className?:
+    | "monochrome"
+    | "luminosity"
+    | "lighten"
+    | "multiply"
+    | "screen"
+    | "overlay"
+    | "darken"
+    | "color-dodge"
+    | "color-burn"
+    | "hard-light"
+    | "soft-light"
+    | "difference"
+    | "exclusion"
+    | "hue"
+    | "saturation"
+    | "color";
 }
 
 export interface IScriptScreenContentPromptCommandAction {

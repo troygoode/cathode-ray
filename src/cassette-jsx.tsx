@@ -47,7 +47,23 @@ export { CathodeRay_Link as Link };
 
 export type BitmapProps = {
   src: string;
-  style?: "lighten" | "luminosity";
+  style?:
+    | "monochrome"
+    | "luminosity"
+    | "lighten"
+    | "multiply"
+    | "screen"
+    | "overlay"
+    | "darken"
+    | "color-dodge"
+    | "color-burn"
+    | "hard-light"
+    | "soft-light"
+    | "difference"
+    | "exclusion"
+    | "hue"
+    | "saturation"
+    | "color";
 };
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 function CathodeRay_Bitmap(_props: BitmapProps) {
@@ -55,12 +71,12 @@ function CathodeRay_Bitmap(_props: BitmapProps) {
 }
 export { CathodeRay_Bitmap as Bitmap };
 
-function CathodeRay_Toggle(props: PropsWithChildren<object>) {
+function CathodeRay_Toggle(props: PropsWithChildren) {
   return props.children;
 }
 export { CathodeRay_Toggle as Toggle };
 
-function CathodeRay_ToggleOption(props: PropsWithChildren<object>) {
+function CathodeRay_ToggleOption(props: PropsWithChildren) {
   return props.children;
 }
 export { CathodeRay_ToggleOption as ToggleOption };

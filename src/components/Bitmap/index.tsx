@@ -42,9 +42,11 @@ class Bitmap extends Component<BitmapProps, BitmapState> {
     const css = ["__image__", className ? className : null].join(" ").trim();
 
     return (
-      <div className={css}>
-        {loading && <div className="progressbar" />}
-        <canvas ref={this._canvasRef} />
+      <div className="bitmap-wrapper">
+        <div className={css}>
+          {loading && <div className="progressbar" />}
+          <canvas ref={this._canvasRef} />
+        </div>
       </div>
     );
   }
