@@ -1,5 +1,8 @@
 import type { ICassette } from "@/cassette";
 
+const corp = "Ishiyama Dynamics";
+const hr = "===============";
+
 const json: ICassette = {
   meta: {
     name: "The Haunting of Ypsilon-14 JSON data",
@@ -13,13 +16,13 @@ const json: ICassette = {
       type: "screen",
       content: [
         "YPSILON-14",
-        "==========",
+        hr,
         "",
-        "Welcome to the Ypsilon-14 Mining Station, a property of ISHIYAMA DYNAMICS (c), where innovation is our top priority (tm).",
-        "==========",
+        `Welcome to the Ypsilon-14 Mining Station, a property of ${corp.toUpperCase()} (c), where innovation is our top priority (tm).`,
+        hr,
         "",
         {
-          text: "> ACCEPT EULA & LOG IN",
+          text: "> ACCEPT EULA",
           type: "link",
           target: "menu",
         },
@@ -30,7 +33,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Main Menu",
-        "=========",
+        hr,
         "",
         {
           text: "> STATION MAP",
@@ -69,7 +72,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Station Map",
-        "===========",
+        hr,
         "",
         {
           type: "bitmap",
@@ -79,7 +82,7 @@ const json: ICassette = {
         "",
         "A copy of the map is now available via data tablet.",
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -93,7 +96,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Diagnostics",
-        "===========",
+        hr,
         "",
         "Checking life support.............. Done.",
         "Checking main systems.............. Done.",
@@ -112,12 +115,12 @@ const json: ICassette = {
         "NOTICE: Air filters replaced 455 day(s) ago.",
         "NOTICE: Mineshaft lift maintained 455 day(s) ago.",
         "",
-        "===========",
+        hr,
         "",
         "SUMMARY:",
         "All systems operating within acceptible parameters.",
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -131,7 +134,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Schedule",
-        "========",
+        hr,
         "",
         "Docking bay activity (past 6 months):",
         "",
@@ -140,7 +143,7 @@ const json: ICassette = {
         "2366-03-02.1223 - Bay 2 : Depart :: Key Largo",
         "2366-02-20.1604 - Bay 2 : Arrive :: Key Largo",
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -154,7 +157,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Roster",
-        "======",
+        hr,
         "",
         "01. VERHOEVEN, Sonya     :: Admin",
         "02. SINGH, Ashraf        :: Breaker",
@@ -167,7 +170,7 @@ const json: ICassette = {
         "09. NEKTARIOS, Ri        :: Loader",
         "10. n/a",
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -181,7 +184,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "COMMS",
-        "=====",
+        hr,
         "",
         "2 vessels detected in proximity.",
         "",
@@ -196,7 +199,7 @@ const json: ICassette = {
           type: "link",
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -210,14 +213,14 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Transmitting",
-        "============",
+        hr,
         "",
         "..........................................",
         "..........................................",
         "",
         "COMMUNICATION CHANNEL OPENED",
         "",
-        "======",
+        hr,
         "",
         {
           text: "< CLOSE CHANNEL",
@@ -231,7 +234,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Transmitting",
-        "============",
+        hr,
         "",
         "..........................................",
         "..........................................",
@@ -244,7 +247,7 @@ const json: ICassette = {
           text: "NO RESPONSE",
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -258,7 +261,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Controls",
-        "========",
+        hr,
         "",
         "[A] :: Administrator access only",
         "",
@@ -305,7 +308,7 @@ const json: ICassette = {
           ],
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -319,7 +322,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Airlocks",
-        "========",
+        hr,
         "",
         {
           type: "link",
@@ -329,7 +332,6 @@ const json: ICassette = {
             {
               target: "airlockError",
               type: "dialog",
-              shiftKey: false,
             },
           ],
         },
@@ -347,7 +349,7 @@ const json: ICassette = {
           ],
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -361,7 +363,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Showers",
-        "=======",
+        hr,
         "",
         {
           type: "toggle",
@@ -434,7 +436,7 @@ const json: ICassette = {
           ],
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -448,7 +450,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Hydroponics Lab",
-        "===============",
+        hr,
         "",
         {
           type: "toggle",
@@ -464,7 +466,7 @@ const json: ICassette = {
           ],
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -478,7 +480,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "System",
-        "======",
+        hr,
         "",
         {
           text: "> LIFE SUPPORT",
@@ -491,7 +493,7 @@ const json: ICassette = {
           type: "link",
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -505,7 +507,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Life Support",
-        "============",
+        hr,
         "",
         {
           type: "text",
@@ -527,7 +529,7 @@ const json: ICassette = {
           ],
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -541,7 +543,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Self-Destruct",
-        "=============",
+        hr,
         "",
         {
           type: "text",
@@ -555,7 +557,7 @@ const json: ICassette = {
           type: "link",
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",
@@ -569,7 +571,7 @@ const json: ICassette = {
       type: "screen",
       content: [
         "Activate Self-Destruct",
-        "======================",
+        hr,
         "",
         {
           type: "text",
@@ -598,7 +600,7 @@ const json: ICassette = {
           ],
         },
         "",
-        "======",
+        hr,
         "",
         {
           text: "< BACK",

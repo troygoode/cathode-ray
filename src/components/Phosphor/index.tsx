@@ -756,7 +756,21 @@ class Phosphor extends Component<PhosphorProps, AppState> {
 
     // otherwise, it's a LinkTarget array
     const targets = Array.isArray(target) ? target : [target];
-    const linkTarget = targets.find((element) => !element.shiftKey || shiftKey);
+
+    console.log({
+      shiftKey,
+      targets,
+    });
+
+    let linkTarget: IScriptScreenContentLinkTarget | undefined;
+
+    if (shiftKey) {
+      linkTarget = targets.find((element) => !!element.shiftKey);
+    }
+
+    if (!linkTarget) {
+      linkTarget = targets.find((element) => !element.shiftKey);
+    }
 
     if (linkTarget) {
       // perform the appropriate action based on type

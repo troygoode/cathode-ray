@@ -22,12 +22,13 @@ export interface IScriptScreenContentPrompt {
   commands: IScriptScreenContentPromptCommand[];
 }
 
+export interface IScriptScreenContentToggleOption {
+  active: boolean;
+  text: string;
+}
 export interface IScriptScreenContentToggle {
   type: "toggle";
-  states: {
-    active: boolean;
-    text: string;
-  }[];
+  states: IScriptScreenContentToggleOption[];
 }
 
 export interface IScriptScreenContentLinkTarget {
@@ -69,7 +70,7 @@ export interface IScriptScreen {
 export interface IScriptDialog {
   id: string;
   type: "alert";
-  content: string[];
+  content: TScriptScreenContent[];
 }
 
 export interface ICassette {
