@@ -1,5 +1,5 @@
 import { decode } from "@/utils/hex";
-import * as cassetteLibrary from "@/cassettes2";
+import * as cassetteLibrary from "@/cassettes";
 import loadCassettes from "@/utils/load-cassettes";
 import { notFound } from "next/navigation";
 import Phosphor from "@/components/Phosphor";
