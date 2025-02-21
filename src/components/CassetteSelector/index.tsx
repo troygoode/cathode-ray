@@ -49,16 +49,7 @@ function createMetaCassette(cassettes: ICassette[]): ICassette {
   };
 }
 
-import Test from "@/cassettes2/ypsilon14";
-import toJSON from "@/utils/jsx-to-js";
-import collapse from "@/utils/cathode-ray-collapse";
-import toPhosphor from "@/utils/cathode-ray-to-phosphor";
-
 export default function CassetteSelector({ cassettes }: TProps) {
-  const json = toJSON(Test());
-  const json2 = collapse(json);
-  const json3 = toPhosphor(json2);
-  console.log(JSON.stringify(json3, null, "  "));
   const cassette = createMetaCassette(cassettes);
-  return <Phosphor cassette={json3 || cassette} />;
+  return <Phosphor cassette={cassette} />;
 }

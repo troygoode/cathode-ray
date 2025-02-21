@@ -5,8 +5,19 @@ export interface ICassetteEntry {
   value: ICassette;
 }
 
+import toJSON from "@/utils/jsx-to-js";
+import collapse from "@/utils/cathode-ray-collapse";
+import toPhosphor from "@/utils/cathode-ray-to-phosphor";
+
 export default function loadCassettes(foo: object): ICassette[] {
-  return Object.entries(foo).map(([, value]): ICassette => {
-    return value as ICassette;
-  });
+  const cassettes: ICassette[] = [];
+  for (const [, value] of Object.entries(foo)) {
+    const json = toJSON(value());
+    const collapsedJson = collapse(json);
+    const cassette = toPhosphor(collapsedJson);
+    if (cassette) {
+      cassettes.push(cassette);
+    }
+  }
+  return cassettes;
 }

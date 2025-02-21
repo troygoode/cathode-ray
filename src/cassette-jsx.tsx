@@ -47,7 +47,7 @@ export { CathodeRay_Link as Link };
 
 export type BitmapProps = {
   src: string;
-  style?: "lighten";
+  style?: "lighten" | "luminosity";
 };
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 function CathodeRay_Bitmap(_props: BitmapProps) {
@@ -66,11 +66,11 @@ function CathodeRay_ToggleOption(props: PropsWithChildren<object>) {
 export { CathodeRay_ToggleOption as ToggleOption };
 
 export type PromptCommandAction = {
-  type: "link";
+  type: "link" | "dialog";
   target: string;
 };
 export type PromptCommand = {
-  command: "ok";
+  command: string;
   action: PromptCommandAction;
 };
 export type PromptProps = {
