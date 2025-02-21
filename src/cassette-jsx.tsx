@@ -49,17 +49,18 @@ export type BitmapProps = {
   src: string;
   style?: "lighten";
 };
+/* eslint-disable  @typescript-eslint/no-unused-vars */
 function CathodeRay_Bitmap(_props: BitmapProps) {
   return "";
 }
 export { CathodeRay_Bitmap as Bitmap };
 
-function CathodeRay_Toggle(props: PropsWithChildren<{}>) {
+function CathodeRay_Toggle(props: PropsWithChildren<object>) {
   return props.children;
 }
 export { CathodeRay_Toggle as Toggle };
 
-function CathodeRay_ToggleOption(props: PropsWithChildren<{}>) {
+function CathodeRay_ToggleOption(props: PropsWithChildren<object>) {
   return props.children;
 }
 export { CathodeRay_ToggleOption as ToggleOption };

@@ -412,7 +412,7 @@ const SelfDestructActivate = () => {
           },
         ]}
       >
-        TYPE 'OK' TO BEGIN COUNTDOWN:
+        TYPE &apos;OK&apos; TO BEGIN COUNTDOWN:
       </Prompt>
       <Br />
       <Line>==========</Line>
@@ -449,7 +449,7 @@ const AirlockErrorDialog = () => {
   );
 };
 
-export default () => {
+export default function Ypsilon14() {
   return (
     <Cassette
       name="The Haunting of Ypsilon-14 JSON data"
@@ -478,4 +478,4 @@ export default () => {
       <AirlockErrorDialog />
     </Cassette>
   );
-};
+}

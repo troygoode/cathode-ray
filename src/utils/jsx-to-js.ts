@@ -1,6 +1,7 @@
 import * as React from "react";
 
 export type TAttributes = {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   [key: string]: any;
 };
 export interface INodeBranch {
@@ -17,7 +18,7 @@ export type TNode = INodeBranch | INodeLeaf;
 export type TChild = TNode | React.JSX.Element | string;
 
 function all<T>(arr: T[], test: (t: T) => boolean): boolean {
-  for (let t of arr) {
+  for (const t of arr) {
     if (!test(t)) {
       return false;
     }
@@ -47,6 +48,7 @@ function toJSONNode(element: React.JSX.Element): TChild {
 
   if (typeof Component !== "string") {
     res.name = Component.name;
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     const context = (element as any).context || {};
     if (
       Component.prototype &&

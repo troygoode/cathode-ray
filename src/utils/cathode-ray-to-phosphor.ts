@@ -23,6 +23,7 @@ const isNamed = (name: string): TNameCb => {
   };
 };
 
+/* eslint-disable  @typescript-eslint/no-unused-vars */
 const parseBr = (_content: IContent): TScriptScreenContent => {
   return "";
 };
