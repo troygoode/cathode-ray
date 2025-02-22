@@ -1,6 +1,8 @@
+"use client";
+
 import { PropsWithChildren } from "react";
+import Scanlines from "@/components/Scanlines";
 import styles from "./bevel.module.css";
-import Scanlines from "../Scanlines";
 
 const Bevel = ({ children }: PropsWithChildren) => {
   // Credit: https://codepen.io/somethingformed/pen/raWJXV

@@ -76,7 +76,8 @@
 }
 
 .glow {
-  animation: crt-glow 60s infinite;
+  animation: crt-glow 2s infinite;
+  animation-direction: alternate;
   background: radial-gradient(
     circle at center,
     rgba(27, 212, 89, 1) 0%,
@@ -86,7 +87,7 @@
     rgba(10, 23, 12, 0) 100%
   );
   /* filter: blur(10rem) opacity(0.1); */
-  opacity: 0.15;
+  opacity: 0.25;
   pointer-events: none;
 
   position: fixed;
@@ -106,7 +107,7 @@
 
 @keyframes crt-glow {
   0% {
-    opacity: 0.1;
+    opacity: 0.18;
   }
   50% {
     opacity: 0.2;

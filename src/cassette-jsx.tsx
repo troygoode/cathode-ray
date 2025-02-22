@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 
 export type CassetteProps = {
   name: string;
+  title?: string;
   author?: string;
   comment?: string;
 };
@@ -9,6 +10,11 @@ function CathodeRay_Cassette(props: PropsWithChildren<CassetteProps>) {
   return props.children;
 }
 export { CathodeRay_Cassette as Cassette };
+
+function CathodeRay_Wrapper(props: PropsWithChildren) {
+  return props.children;
+}
+export { CathodeRay_Wrapper as Wrapper };
 
 export type ScreenProps = {
   id: string;

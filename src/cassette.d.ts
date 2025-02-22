@@ -94,6 +94,7 @@ export interface ICassette {
   dialogs?: IScriptDialog[];
   meta: {
     name: string;
+    title?: string;
     author?: string;
     comment?: string;
   };

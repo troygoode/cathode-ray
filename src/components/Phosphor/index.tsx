@@ -751,12 +751,6 @@ class Phosphor extends Component<PhosphorProps, AppState> {
 
     // otherwise, it's a LinkTarget array
     const targets = Array.isArray(target) ? target : [target];
-
-    console.log({
-      shiftKey,
-      targets,
-    });
-
     let linkTarget: IScriptScreenContentLinkTarget | undefined;
 
     if (shiftKey) {

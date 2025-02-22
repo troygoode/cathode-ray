@@ -103,9 +103,17 @@ const parseToggle = (content: IContent): TScriptScreenContent => {
   };
 };
 
-// TODO: parseToggle
+const parseWrapper = (content: IContent): TScriptScreenContent[] => {
+  const branch: INodeBranch = content as INodeBranch;
+  const children: TScriptScreenContent[] | undefined = branch.children
+    ?.map(parseContent)
+    .flat();
+  return children || [];
+};
 
-const parseContent = (node: TNode | TChild): TScriptScreenContent => {
+const parseContent = (
+  node: TNode | TChild
+): TScriptScreenContent | TScriptScreenContent[] => {
   const content: IContent = node as IContent;
   switch (content.name) {
     case "CathodeRay_Bitmap":
@@ -120,6 +128,8 @@ const parseContent = (node: TNode | TChild): TScriptScreenContent => {
       return parsePrompt(content);
     case "CathodeRay_Toggle":
       return parseToggle(content);
+    case "CathodeRay_Wrapper":
+      return parseWrapper(content);
     default:
       return "PARSER_ERROR: NO MATCH";
   }
@@ -131,7 +141,7 @@ const parseScreen = (node: TNode | TChild): IScriptScreen => {
   return {
     id: att["id"],
     type: "screen",
-    content: branch.children?.map(parseContent) || [],
+    content: (branch.children?.map(parseContent) || []).flat(),
   };
 };
 
@@ -141,7 +151,7 @@ const parseDialog = (node: TNode | TChild): IScriptDialog => {
   return {
     id: att["id"],
     type: att["style"],
-    content: branch.children?.map(parseContent) || [],
+    content: (branch.children?.map(parseContent) || []).flat(),
   };
 };
 
@@ -151,6 +161,7 @@ const parseCassette = (node: TNode): ICassette => {
   return {
     meta: {
       name: att["name"],
+      title: att["title"],
       author: att["author"],
       comment: att["comment"],
     },
