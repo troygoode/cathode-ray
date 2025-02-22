@@ -14,9 +14,10 @@ type TProps = {
   screen: "gatekeeper" | "library";
 };
 
-const text = (s: string): TScriptScreenContent => {
+const text = (s: string, css?: string): TScriptScreenContent => {
   return {
     type: "text",
+    className: css,
     text: s,
   };
 };
@@ -76,7 +77,7 @@ function createMetaCassette(cassettes: ICassette[], screen: string): ICassette {
       logoBitmap,
       forkMe,
       "\n",
-      text("FOR KEEPERS' EYES ONLY!"),
+      text("FOR KEEPERS' EYES ONLY!", "alert"),
       text("======================="),
       text("Enter security code to proceed:"),
       {
@@ -103,8 +104,7 @@ function createMetaCassette(cassettes: ICassette[], screen: string): ICassette {
       logoBitmap,
       forkMe,
       "\n",
-      text("=========================="),
-      text("Select a CASSETTE to load:"),
+      text("SELECT A CASSETTE TO LOAD:"),
       text("=========================="),
       generateCassetteSelectionList(cassettes),
     ].flat(),
