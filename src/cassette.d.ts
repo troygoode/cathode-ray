@@ -22,12 +22,12 @@ export interface IScriptScreenContentBitmap {
 }
 
 export interface IScriptScreenContentPromptCommandAction {
-  type: "link" | "dialog" | "console";
+  type: "link" | "dialog" | "console" | "href";
   target: string;
 }
 
 export interface IScriptScreenContentPromptCommand {
-  command: "back" | "dialog" | "image" | "ok";
+  command: string;
   action: IScriptScreenContentPromptCommandAction;
 }
 

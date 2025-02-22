@@ -741,6 +741,12 @@ class Phosphor extends Component<PhosphorProps, AppState> {
         }
         break;
 
+      case "href":
+        if (action.target) {
+          window.location.replace(action.target);
+        }
+        break;
+
       case "console":
         console.log(command, action);
         break;

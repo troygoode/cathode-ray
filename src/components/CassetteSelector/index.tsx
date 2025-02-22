@@ -1,5 +1,6 @@
 import {
   ICassette,
+  IScriptScreen,
   IScriptScreenContentBitmap,
   TScriptScreenContent,
 } from "@/cassette";
@@ -10,6 +11,7 @@ import logo from "@/assets/cathode-ray-logo.png";
 
 type TProps = {
   cassettes: ICassette[];
+  screen: "gatekeeper" | "library";
 };
 
 const text = (s: string): TScriptScreenContent => {
@@ -61,37 +63,76 @@ const logoBitmap: IScriptScreenContentBitmap = {
   className: "color-dodge",
   src: logo.src,
 };
+const forkMe = link(
+  "Fork me on Github! https://github.com/troygoode/cathode-ray",
+  "https://github.com/troygoode/cathode-ray"
+);
 
-function createMetaCassette(cassettes: ICassette[]): ICassette {
-  const content: TScriptScreenContent[] = [
-    logoBitmap,
-    link(
-      "Fork me on Github! https://github.com/troygoode/cathode-ray",
-      "https://github.com/troygoode/cathode-ray"
-    ),
-    "\n",
-    text("=========================="),
-    text("Select a CASSETTE to load:"),
-    text("=========================="),
-    generateCassetteSelectionList(cassettes),
-  ].flat();
-
-  return {
-    meta: {
-      name: "Meta",
-      author: "AUTO-GENERATED",
-    },
-    screens: [
+function createMetaCassette(cassettes: ICassette[], screen: string): ICassette {
+  const gatekeeper: IScriptScreen = {
+    id: "gatekeeper",
+    type: "screen",
+    content: [
+      logoBitmap,
+      forkMe,
+      "\n",
+      text("FOR KEEPERS' EYES ONLY!"),
+      text("======================="),
+      text("Enter security code to proceed:"),
       {
-        id: "meta-selection",
-        type: "screen",
-        content,
+        type: "prompt",
+        className: "cursor",
+        prompt: "> ",
+        commands: [
+          {
+            command: "mothership",
+            action: {
+              type: "href",
+              target: "/library",
+            },
+          },
+        ],
       },
     ],
   };
+
+  const library: IScriptScreen = {
+    id: "meta-selection",
+    type: "screen",
+    content: [
+      logoBitmap,
+      forkMe,
+      "\n",
+      text("=========================="),
+      text("Select a CASSETTE to load:"),
+      text("=========================="),
+      generateCassetteSelectionList(cassettes),
+    ].flat(),
+  };
+
+  switch (screen) {
+    case "gatekeeper":
+      return {
+        meta: {
+          name: "Meta",
+          author: "AUTO-GENERATED",
+        },
+        screens: [gatekeeper],
+      };
+    case "library":
+      return {
+        meta: {
+          name: "Meta",
+          author: "AUTO-GENERATED",
+        },
+        screens: [library],
+      };
+    default:
+      throw new Error(`Unknown screen: ${screen}`);
+  }
 }
 
-export default function CassetteSelector({ cassettes }: TProps) {
-  const cassette = createMetaCassette(cassettes);
+export default function CassetteSelector({ cassettes, screen }: TProps) {
+  const cassette = createMetaCassette(cassettes, screen);
   return <Phosphor cassette={cassette} cassetteKey="/" />;
 }

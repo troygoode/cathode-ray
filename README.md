@@ -10,6 +10,8 @@ Based on [Phosphor](https://github.com/redhg/phosphor) by [redhg](https://github
 
 ## Getting Started
 
+The password for the first screen is `MOTHERSHIP`. This is just there to keep curious players at arms' length so they don't accidently see something they shouldn't by messing about with the browser URLs.
+
 This project was created with [NextJS](https://github.com/facebook/create-react-app).
 
 To install this project, open a terminal window and `cd` into the repo's directory, then run
