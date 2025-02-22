@@ -1,5 +1,3 @@
-"use client";
-
 import { ICassette, TScriptScreenContent } from "@/cassette";
 import Phosphor from "@/components/Phosphor";
 import { encode } from "@/utils/hex";

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { decode } from "@/utils/hex";
+import { encode, decode } from "@/utils/hex";
 import loadCassettes from "@/utils/load-cassettes";
 import Phosphor from "@/components/Phosphor";
 import * as cassetteLibrary from "@/cassettes";
@@ -48,4 +48,54 @@ export default async function Page(props: TCassetteLoaderProps) {
       />
     </>
   );
+}
+
+type TStaticCassette = {
+  key: string;
+  screens: string[];
+  dialogs: string[];
+};
+
+type TCassetteRoute =
+  | {
+      key: string;
+    }
+  | {
+      key: string;
+      screen: string;
+    }
+  | {
+      key: string;
+      screen: string;
+      dialog: string;
+    };
+
+export function generateStaticParamsInternal(output: "c" | "c+s" | "c+s+d") {
+  const staticCassettes: TStaticCassette[] = cassettes.map((c) => {
+    return {
+      key: c.meta.name,
+      screens: c.screens.map((s) => s.id),
+      dialogs: c.dialogs?.map((d) => d.id) || [],
+    };
+  });
+
+  const results: TCassetteRoute[] = [];
+  for (const c of staticCassettes) {
+    if (output === "c") {
+      results.push({ key: encode(c.key) });
+      continue;
+    }
+    for (const screen of c.screens) {
+      if (output === "c+s") {
+        results.push({ key: encode(c.key), screen });
+        continue;
+      }
+      if (output === "c+s+d") {
+        for (const dialog of c.dialogs) {
+          results.push({ key: encode(c.key), screen, dialog });
+        }
+      }
+    }
+  }
+  return results;
 }

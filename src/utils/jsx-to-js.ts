@@ -28,12 +28,16 @@ function all<T>(arr: T[], test: (t: T) => boolean): boolean {
 
 function toJSONNode(element: React.JSX.Element): TChild {
   if (!element || !element.type) {
-    return element;
+    return (
+      element && {
+        name: element.type?.JsonOutputKey || element.type,
+      }
+    );
   }
 
   const Component = element.type;
   const res: TNode = {
-    name: element.type,
+    name: element.type?.JsonOutputKey || element.type,
   };
 
   res.attributes = { ...element.props };
@@ -47,7 +51,7 @@ function toJSONNode(element: React.JSX.Element): TChild {
   }
 
   if (typeof Component !== "string") {
-    res.name = Component.name;
+    res.name = element.type?.JsonOutputKey || Component.name;
     /* eslint-disable  @typescript-eslint/no-explicit-any */
     const context = (element as any).context || {};
     if (
@@ -63,9 +67,19 @@ function toJSONNode(element: React.JSX.Element): TChild {
   }
 
   if (Array.isArray(children)) {
-    res.children = children.map((child) => toJSON(child));
+    res.children = children.map((child) => toJSONNode(child));
   } else {
-    res.children = children ? [toJSON(children)] : [];
+    res.children = children ? [toJSONNode(children)] : [];
+  }
+
+  if (element.type?.JsonOutputLeaf) {
+    if (!element.props.children?.length) {
+      res.children = undefined;
+    } else if (Array.isArray(element.props.children)) {
+      res.children = element.props.children;
+    } else {
+      res.children = [element.props.children];
+    }
   }
 
   if (!res.children?.length) {
