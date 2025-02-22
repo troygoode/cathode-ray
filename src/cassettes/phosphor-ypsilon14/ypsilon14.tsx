@@ -12,7 +12,7 @@ import {
   Wrapper,
 } from "@/cassette-jsx";
 
-import map from "@/cassettes/ypsilon14/ypsilon14-map.png";
+import map from "@/cassettes/phosphor-ypsilon14/ypsilon14-map.png";
 import { PropsWithChildren } from "react";
 
 const today = new Date(2366, 5, 12);
@@ -466,7 +466,7 @@ const AirlockErrorDialog = () => {
 export default function Ypsilon14() {
   return (
     <Cassette
-      name="The Haunting of Ypsilon-14"
+      name="The Haunting of Ypsilon-14 (Original Phosphor Version)"
       title={`${names.station} Main Computer`}
       author="@redhg"
       comment="Phosphor content file for the 'Haunting of Ypsilon-14' module for the Mothership tabletop roleplaying game. Visit https://redhg.com/ypsilon14/ to see the compiled application."

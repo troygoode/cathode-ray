@@ -11,7 +11,7 @@ import {
   Dialog,
 } from "@/cassette-jsx";
 
-import cat from "@/cassettes/sample/sample-cat.jpg";
+import cat from "@/cassettes/phosphor-sample/sample-cat.jpg";
 
 const Screen0 = () => {
   return (
@@ -180,7 +180,7 @@ const LockedDialog = () => {
 
 export default function Ypsilon14() {
   return (
-    <Cassette name="Sample JSON data" author="@redhg">
+    <Cassette name="Sample (Original Phosphor Version)" author="@redhg">
       <Screen0 />
       <Screen1 />
       <Screen2 />

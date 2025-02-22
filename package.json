@@ -1,8 +1,16 @@
 {
   "name": "cathode-ray",
   "version": "0.1.0",
-  "homepage": "https://cathode-ray.sandlotgaming.com/",
   "private": true,
+  "homepage": "https://cathode-ray.sandlotgaming.com/",
+  "author": {
+    "name": "Troy Goode",
+    "email": "troygoode@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/troygoode/cathode-ray"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "set NODE_ENV=production && next build",

@@ -1,34 +1,69 @@
-import { ICassette, TScriptScreenContent } from "@/cassette";
+import {
+  ICassette,
+  IScriptScreenContentBitmap,
+  TScriptScreenContent,
+} from "@/cassette";
 import Phosphor from "@/components/Phosphor";
 import { encode } from "@/utils/hex";
+
+import logo from "@/assets/cathode-ray-logo.png";
 
 type TProps = {
   cassettes: ICassette[];
 };
 
+const text = (s: string): TScriptScreenContent => {
+  return {
+    type: "text",
+    text: s,
+  };
+};
+const link = (text: string, target?: string): TScriptScreenContent => {
+  return {
+    type: "link",
+    target: {
+      type: "href",
+      target: target || text,
+    },
+    text,
+  };
+};
+
 function generateCassetteSelectionList(
   cassettes: ICassette[]
 ): TScriptScreenContent[] {
-  return cassettes.map((cassette) => {
-    return {
-      type: "link",
-      target: {
-        type: "href",
-        target: `/c/${encode(cassette.meta.name)}`,
-      },
-      text: `* ${cassette.meta.name}`,
-    };
-  });
+  const result: TScriptScreenContent[] = [];
+  for (const cassette of cassettes) {
+    result.push("\n");
+    result.push(text(cassette.meta.name));
+    if (cassette.meta.author?.length) {
+      result.push(text(`: By: ${cassette.meta.author}`));
+    }
+    if (cassette.meta.comment?.length) {
+      result.push(text(`: ${cassette.meta.comment}`));
+    }
+    result.push(link(`> LOAD CASSETTE`, `/c/${encode(cassette.meta.name)}`));
+  }
+  return result;
 }
 
+const logoBitmap: IScriptScreenContentBitmap = {
+  type: "bitmap",
+  className: "color-dodge",
+  src: logo.src,
+};
+
 function createMetaCassette(cassettes: ICassette[]): ICassette {
-  const intro: TScriptScreenContent = {
-    type: "text",
-    text: "Select a cassette to begin.",
-  };
   const content: TScriptScreenContent[] = [
-    intro,
+    logoBitmap,
+    link(
+      "Fork me on Github! https://github.com/troygoode/cathode-ray",
+      "https://github.com/troygoode/cathode-ray"
+    ),
     "\n",
+    text("==========================="),
+    text("Select a CASSETTE to begin:"),
+    text("==========================="),
     generateCassetteSelectionList(cassettes),
   ].flat();
 

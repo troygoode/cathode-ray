@@ -4,7 +4,7 @@
 
 ## Inspiration
 
-Based on [Phosphor](https://github.com/redhg/phosphor) by [redhg](https://github.com/redhg)
+Based on [Phosphor](https://github.com/redhg/phosphor) by [redhg](https://github.com/redhg), which is now archved / in maintenance mode. You can see the live version of their implemtation here: [https://redhg.com/ypsilon14/](https://redhg.com/ypsilon14/).
 
 [Click here to skip the preamble and jump straight to Getting Started](#getting-started).
 
@@ -42,7 +42,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm start`
+### `npx serve@latest out`
 
 Runs the app in the production mode (you must have run `npm run build` first).<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
