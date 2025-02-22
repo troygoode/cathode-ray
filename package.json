@@ -1,7 +1,7 @@
 {
   "name": "cathode-ray",
   "version": "0.1.0",
-  "homepage": "https://www.squaredroot.com/cathode-ray/",
+  "homepage": "https://cathode-ray.sandlotgaming.com/",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
