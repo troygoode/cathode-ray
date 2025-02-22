@@ -12,9 +12,10 @@ import {
   Wrapper,
 } from "@/cassette-jsx";
 
-import map from "@/cassettes/phosphor-ypsilon14/ypsilon14-map.png";
+import map from "@/cassettes/ypsilon14/ypsilon14-map.png";
 import { PropsWithChildren } from "react";
 
+const password = "chapman"; // hat tip to the author of the Haunting of Ypsilon-14: D. G. Chapman
 const today = new Date(2366, 5, 12);
 const names = {
   station: "Ypsilon-14",
@@ -81,6 +82,7 @@ const Back = ({
 type TLockedLinkProps = {
   ifLockedTarget?: string;
   ifLockedTargetType?: "dialog" | "link";
+  hackable?: boolean;
   type: "link" | "dialog";
   target: string;
 };
@@ -88,10 +90,11 @@ const LockedLink = ({
   children,
   ifLockedTarget = "lockedDialog",
   ifLockedTargetType = "dialog",
+  hackable = false,
   target,
   type,
 }: PropsWithChildren<TLockedLinkProps>) => {
-  return (
+  return hackable ? (
     <Link
       target={[
         {
@@ -103,6 +106,18 @@ const LockedLink = ({
           target,
           type,
           shiftKey: true,
+        },
+      ]}
+    >
+      {children}
+    </Link>
+  ) : (
+    <Link
+      target={[
+        {
+          target: ifLockedTarget,
+          type: ifLockedTargetType,
+          shiftKey: false,
         },
       ]}
     >
@@ -276,8 +291,6 @@ const Controls = () => {
   return (
     <Screen id="controls">
       <Header label="Controls" />
-      <Line>[A] :: Administrator access only</Line>
-      <Br />
       <Link target="showers">&gt; SHOWERS</Link>
       <Link target="greenhouse">&gt; HYDROPONICS LAB</Link>
       <LockedLink target="airlocks" type="link">
@@ -286,7 +299,36 @@ const Controls = () => {
       <LockedLink target="system" type="link">
         &gt; SYSTEM [A]
       </LockedLink>
+      <Br />
+      <Line>[A] :: Administrator access only</Line>
+      <Br />
+      <Prompt
+        commands={[
+          {
+            command: password,
+            action: {
+              type: "link",
+              target: "controlsunlocked",
+            },
+          },
+        ]}
+      >
+        Enter security code to unlock:
+      </Prompt>
       <Back target="menu" />
+    </Screen>
+  );
+};
+
+const ControlsUnlocked = () => {
+  return (
+    <Screen id="controlsunlocked">
+      <Header label="Controls" />
+      <Link target="showers">&gt; SHOWERS</Link>
+      <Link target="greenhouse">&gt; HYDROPONICS LAB</Link>
+      <Link target="airlocks">&gt; AIRLOCKS</Link>
+      <Link target="system">&gt; SYSTEM</Link>
+      <Back target="controls" />
     </Screen>
   );
 };
@@ -311,7 +353,7 @@ const Airlocks = () => {
         <ToggleOption>&gt; DOCKING BAY 2 :: UNLOCKED</ToggleOption>
         <ToggleOption>&gt; DOCKING BAY 2 :: LOCKED</ToggleOption>
       </Toggle>
-      <Back target="controls" />
+      <Back target="controlsunlocked" />
     </Screen>
   );
 };
@@ -365,7 +407,7 @@ const System = () => {
       <Header label="System" />
       <Link target="lifesupport">&gt; LIFE SUPPORT</Link>
       <Link target="selfdestruct">&gt; SELF-DESTRUCT</Link>
-      <Back target="controls" />
+      <Back target="controlsunlocked" />
     </Screen>
   );
 };
@@ -466,11 +508,11 @@ const AirlockErrorDialog = () => {
 export default function Ypsilon14() {
   return (
     <Cassette
-      name="999 The Haunting of Ypsilon-14 (Original Phosphor Version)"
+      name="001 The Haunting of Ypsilon-14"
       title={`${names.station} Main Computer`}
-      author="@redhg"
-      comment="Phosphor content file for the 'Haunting of Ypsilon-14' module for the Mothership tabletop roleplaying game."
-      website="https://redhg.com/ypsilon14/"
+      author="@troygoode"
+      website="https://github.com/troygoode/cathode-ray"
+      comment='The security code is "CHAPMAN"'
     >
       <Home />
       <MainMenu />
@@ -482,6 +524,7 @@ export default function Ypsilon14() {
       <HailTempest />
       <HailHeracles />
       <Controls />
+      <ControlsUnlocked />
       <Airlocks />
       <Showers />
       <Greenhouse />

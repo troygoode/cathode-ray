@@ -33,7 +33,10 @@ function generateCassetteSelectionList(
   cassettes: ICassette[]
 ): TScriptScreenContent[] {
   const result: TScriptScreenContent[] = [];
-  for (const cassette of cassettes) {
+  const sortedCassettes = cassettes.sort((a, b) => {
+    return a.meta.name.localeCompare(b.meta.name);
+  });
+  for (const cassette of sortedCassettes) {
     result.push("\n");
     result.push(
       link(`> ${cassette.meta.name}`, `/c/${encode(cassette.meta.name)}`)
