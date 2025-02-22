@@ -51,5 +51,5 @@ function createMetaCassette(cassettes: ICassette[]): ICassette {
 
 export default function CassetteSelector({ cassettes }: TProps) {
   const cassette = createMetaCassette(cassettes);
-  return <Phosphor cassette={cassette} />;
+  return <Phosphor cassette={cassette} cassetteKey="/" />;
 }
