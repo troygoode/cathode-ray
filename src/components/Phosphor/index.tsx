@@ -3,6 +3,8 @@
 import styles from "./phosphor.module.css";
 
 import React, { Component, ReactElement } from "react";
+import { redirect } from "next/navigation";
+
 import type {
   ICassette,
   IScriptDialog,
@@ -25,8 +27,13 @@ import {
   ScreenDataState,
   ScreenType,
   DialogType,
-} from "@/app-state-enums";
-import type { AppState, Screen, ScreenData, Dialog } from "@/app-state";
+} from "@/components/Phosphor/app-state-enums";
+import type {
+  AppState,
+  Screen,
+  ScreenData,
+  Dialog,
+} from "@/components/Phosphor/app-state";
 
 // components
 import Teletype from "../Teletype";
@@ -39,6 +46,9 @@ import Modal from "../Modal";
 
 interface PhosphorProps {
   cassette: ICassette;
+  cassetteKey: string;
+  activeScreen?: string;
+  activeDialog?: string;
 }
 
 interface ILoadableElement {
@@ -65,9 +75,9 @@ class Phosphor extends Component<PhosphorProps, AppState> {
     this.state = {
       screens: [],
       dialogs: [],
-      activeScreenId: null,
+      activeScreenId: props.activeScreen || null,
       activeElementId: null,
-      activeDialogId: null,
+      activeDialogId: props.activeDialog || null,
       loadingQueue: [],
       status: AppStatus.Unset,
     };
@@ -110,14 +120,25 @@ class Phosphor extends Component<PhosphorProps, AppState> {
       return;
     }
 
-    // todo: support config option to set starting screen
-    const activeScreen = 0;
-    this.setState(
-      {
-        screens: omitFalsy(screens),
-      },
-      () => this._setActiveScreen(activeScreen)
-    );
+    if (this.props.activeScreen) {
+      this.setState(
+        {
+          screens: omitFalsy(screens),
+          activeScreenId: this.props.activeScreen,
+        },
+        () => this._activateScreen()
+      );
+    } else {
+      const activeScreen = 0;
+      this.setState(
+        {
+          screens: omitFalsy(screens),
+        },
+        () => {
+          this._setActiveScreenByIndex(activeScreen);
+        }
+      );
+    }
   }
 
   private _parseDialogs(): void {
@@ -132,6 +153,10 @@ class Phosphor extends Component<PhosphorProps, AppState> {
     this.setState({
       dialogs,
     });
+
+    if (this.props.activeDialog) {
+      this._toggleDialog(this.props.activeDialog);
+    }
   }
 
   private _buildDialog(src: IScriptDialog): Dialog {
@@ -161,7 +186,7 @@ class Phosphor extends Component<PhosphorProps, AppState> {
     }
   }
 
-  private _setActiveScreen(index: number): void {
+  private _setActiveScreenByIndex(index: number): void {
     const { screens } = this.state;
     const activeScreen = screens[index].id;
     this.setState(
@@ -543,24 +568,26 @@ class Phosphor extends Component<PhosphorProps, AppState> {
   }
 
   private _changeScreen(targetScreen: string): void {
-    // todo: handle missing screen
-    // unload the current screen first
-    this._unloadScreen();
+    redirect(`/c/${this.props.cassetteKey}/${targetScreen}`);
 
-    // active the first element in the screen's content collection
-    const screen = this._getScreen(targetScreen);
-    if (!screen) {
-      return;
-    }
+    // // todo: handle missing screen
+    // // unload the current screen first
+    // this._unloadScreen();
 
-    const activeElement = screen.content[0];
-    activeElement.state = ScreenDataState.Active;
+    // // active the first element in the screen's content collection
+    // const screen = this._getScreen(targetScreen);
+    // if (!screen) {
+    //   return;
+    // }
 
-    this.setState({
-      activeScreenId: targetScreen,
-      activeElementId: activeElement.id,
-      status: AppStatus.Active,
-    });
+    // const activeElement = screen.content[0];
+    // activeElement.state = ScreenDataState.Active;
+
+    // this.setState({
+    //   activeScreenId: targetScreen,
+    //   activeElementId: activeElement.id,
+    //   status: AppStatus.Active,
+    // });
   }
 
   private _setElementState(id: string, state: ScreenDataState): void {
@@ -577,27 +604,27 @@ class Phosphor extends Component<PhosphorProps, AppState> {
     }
   }
 
-  private _unloadScreen(): void {
-    // go through the current screen elements, setting
-    // their states to ScreenDataState.Ready
-    const screen = this._getScreen(this.state.activeScreenId);
-    if (!screen) {
-      return;
-    }
+  // private _unloadScreen(): void {
+  //   // go through the current screen elements, setting
+  //   // their states to ScreenDataState.Ready
+  //   const screen = this._getScreen(this.state.activeScreenId);
+  //   if (!screen) {
+  //     return;
+  //   }
 
-    screen.content.forEach((element) => {
-      element.state = ScreenDataState.Unloaded;
-    });
-  }
+  //   screen.content.forEach((element) => {
+  //     element.state = ScreenDataState.Unloaded;
+  //   });
+  // }
 
-  private _getScreenDataById(id: string): ScreenData | undefined {
-    const screen = this._getScreen(this.state.activeScreenId);
-    if (!screen) {
-      return;
-    }
+  // private _getScreenDataById(id: string): ScreenData | undefined {
+  //   const screen = this._getScreen(this.state.activeScreenId);
+  //   if (!screen) {
+  //     return;
+  //   }
 
-    return screen.content.find((element) => element.id === id);
-  }
+  //   return screen.content.find((element) => element.id === id);
+  // }
 
   // find the currently active element and, if possible, activate it
   private _activateNextScreenData(): void {
@@ -638,45 +665,58 @@ class Phosphor extends Component<PhosphorProps, AppState> {
     });
   }
 
-  private _getActiveScreenData(): ScreenData | undefined {
-    const screen = this._getScreen(this.state.activeScreenId);
-    if (!screen) {
-      return;
-    }
+  // private _getActiveScreenData(): ScreenData | undefined {
+  //   const screen = this._getScreen(this.state.activeScreenId);
+  //   if (!screen) {
+  //     return;
+  //   }
 
-    const activeIndex = screen.content.findIndex(
-      (element) => element.state === ScreenDataState.Active
-    );
+  //   const activeIndex = screen.content.findIndex(
+  //     (element) => element.state === ScreenDataState.Active
+  //   );
 
-    // is something active?
-    if (activeIndex > -1) {
-      return screen.content[activeIndex];
-    }
+  //   // is something active?
+  //   if (activeIndex > -1) {
+  //     return screen.content[activeIndex];
+  //   }
 
-    // otherwise set & return the first element
-    const firstData = screen.content[0];
+  //   // otherwise set & return the first element
+  //   const firstData = screen.content[0];
 
-    // unless that element is already done or not yet loaded
-    if (
-      firstData.state === ScreenDataState.Done ||
-      firstData.state === ScreenDataState.Unloaded
-    ) {
-      return;
-    }
+  //   // unless that element is already done or not yet loaded
+  //   if (
+  //     firstData.state === ScreenDataState.Done ||
+  //     firstData.state === ScreenDataState.Unloaded
+  //   ) {
+  //     return;
+  //   }
 
-    firstData.state = ScreenDataState.Active;
-    return firstData;
-  }
+  //   firstData.state = ScreenDataState.Active;
+  //   return firstData;
+  // }
 
-  private _setActiveScreenDataByIndex(index: number): void {
-    const screen = this._getScreen(this.state.activeScreenId);
-    if (!screen) {
-      return;
-    }
-    screen.content[index].state = ScreenDataState.Active;
-  }
+  // private _setActiveScreenDataByIndex(index: number): void {
+  //   const screen = this._getScreen(this.state.activeScreenId);
+  //   if (!screen) {
+  //     return;
+  //   }
+  //   screen.content[index].state = ScreenDataState.Active;
+  // }
 
   private _toggleDialog(dialogId?: string): void {
+    if (dialogId) {
+      window.history.pushState(
+        {},
+        "",
+        `/c/${this.props.cassetteKey}/${this.state.activeScreenId}/${dialogId}`
+      );
+    } else {
+      window.history.pushState(
+        {},
+        "",
+        `/c/${this.props.cassetteKey}/${this.state.activeScreenId}`
+      );
+    }
     // TODO: check if targetDialog is a valid dialog
     this.setState({
       activeDialogId: dialogId || null,

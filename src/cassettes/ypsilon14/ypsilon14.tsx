@@ -167,7 +167,7 @@ const Diagnostics = () => {
         WARNING: Shower #5 non-functional as of 1 day(s) ago.
       </Line>
       <Br />
-      <Line>NOTICE: Air filters replaced 455 day(s) ago.</Line>
+      <Line>NOTICE: Air filters replaced 143 day(s) ago.</Line>
       <Line>NOTICE: Mineshaft lift maintained 455 day(s) ago.</Line>
       <Br />
       <Line>SUMMARY:</Line>
