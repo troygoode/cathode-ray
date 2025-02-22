@@ -5,6 +5,7 @@ import Bevel from "@/components/Bevel";
 export const metadata: Metadata = {
   title: "Cathode Ray",
   description: "A retro terminal simulator for tabletop role-playing games",
+  manifest: "manifest.json", // https://github.com/vercel/next.js/issues/56687
 };
 
 export const viewport: Viewport = {
