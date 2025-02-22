@@ -71,7 +71,7 @@
   border-radius: 0rem;
   opacity: 0.5;
 
-  position: absolute;
+  position: fixed;
   z-index: 2147483651; /* 1 more than scanlines.module.css's semi-magic number */
 }
 

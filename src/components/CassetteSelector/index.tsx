@@ -35,14 +35,15 @@ function generateCassetteSelectionList(
   const result: TScriptScreenContent[] = [];
   for (const cassette of cassettes) {
     result.push("\n");
-    result.push(text(cassette.meta.name));
+    result.push(
+      link(`> ${cassette.meta.name}`, `/c/${encode(cassette.meta.name)}`)
+    );
     if (cassette.meta.author?.length) {
       result.push(text(`: By: ${cassette.meta.author}`));
     }
     if (cassette.meta.comment?.length) {
       result.push(text(`: ${cassette.meta.comment}`));
     }
-    result.push(link(`> LOAD CASSETTE`, `/c/${encode(cassette.meta.name)}`));
   }
   return result;
 }
