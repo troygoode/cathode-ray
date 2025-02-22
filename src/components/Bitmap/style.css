@@ -1,4 +1,5 @@
 .bitmap-wrapper {
+  display: inline-block;
   background-color: var(--background);
 }
 .__image__ {

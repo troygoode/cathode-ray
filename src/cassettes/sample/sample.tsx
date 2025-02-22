@@ -11,6 +11,8 @@ import {
   Dialog,
 } from "@/cassette-jsx";
 
+import cat from "@/cassettes/sample/sample-cat.jpg";
+
 const Screen0 = () => {
   return (
     <Screen id="screen0">
@@ -48,6 +50,7 @@ const Screen1 = () => {
         cycle through their states, starting with whichever has &apos;active:
         true&apos;.
       </Line>
+      <Br />
       <Line>
         You can click the following button several times to cycle through its
         available states
@@ -86,8 +89,9 @@ const Screen1 = () => {
       <Line>
         There&apos;s also a module that accepts user input. It&apos;s very
         particular, and it uses a document-wide event listener which is pretty
-        hacky. See what happens when you type the following commands:\n\n
+        hacky. See what happens when you type the following commands:
       </Line>
+      <Br />
       <Line>BACK</Line>
       <Line>DIALOG</Line>
       <Line>IMAGE</Line>
@@ -131,16 +135,17 @@ const Screen2 = () => {
         such as &quot;luminosity&quot; or &quot;lighten&quot;. See
         Bitmap/style.scss for a list of supported modes.
       </Line>
-      <Bitmap src="https://i.imgur.com/rDjphNY.jpg" />
-      <Bitmap style="lighten" src="https://i.imgur.com/rDjphNY.jpg" />
-      <Bitmap style="luminosity" src="https://i.imgur.com/rDjphNY.jpg" />
       <Br />
-      <Line>
-        Note that as of 2020-06-12, the above blend-modes appear broken in
-        Chrome, but work just fine in Firefox & Safari of all things.
-      </Line>
+      <Line>Normal:</Line>
+      <Bitmap src={cat.src} />
       <Br />
-      <Link target="screen1">&gt; BACK</Link>
+      <Line>Color Dodge:</Line>
+      <Bitmap style="color-dodge" src={cat.src} />
+      <Br />
+      <Line>Luminosity:</Line>
+      <Bitmap style="luminosity" src={cat.src} />
+      <Br />
+      <Link target="screen1">&lt; BACK</Link>
     </Screen>
   );
 };

@@ -36,7 +36,6 @@ import Bitmap from "../Bitmap";
 import Prompt, { PROMPT_DEFAULT } from "../Prompt";
 import Toggle from "../Toggle";
 import Modal from "../Modal";
-import Scanlines from "../Scanlines";
 
 interface PhosphorProps {
   cassette: ICassette;
@@ -71,7 +70,6 @@ class Phosphor extends Component<PhosphorProps, AppState> {
       activeDialogId: null,
       loadingQueue: [],
       status: AppStatus.Unset,
-      renderScanlines: true, // TODO: support option to disable this effect
     };
 
     this._changeScreen = this._changeScreen.bind(this);
@@ -82,7 +80,7 @@ class Phosphor extends Component<PhosphorProps, AppState> {
   }
 
   public render(): ReactElement {
-    const { activeScreenId, activeDialogId, renderScanlines } = this.state;
+    const { activeScreenId, activeDialogId } = this.state;
 
     return (
       <div className={cssClass(styles, "phosphor")}>
@@ -91,9 +89,6 @@ class Phosphor extends Component<PhosphorProps, AppState> {
         </section>
 
         {activeDialogId && this._renderDialog()}
-
-        {/* scanlines should be the last child */}
-        {renderScanlines && <Scanlines />}
       </div>
     );
   }

@@ -43,10 +43,10 @@ class Bitmap extends Component<BitmapProps, BitmapState> {
 
     return (
       <div className="bitmap-wrapper">
-        <div className={css}>
+        <span className={css}>
           {loading && <div className="progressbar" />}
           <canvas ref={this._canvasRef} />
-        </div>
+        </span>
       </div>
     );
   }

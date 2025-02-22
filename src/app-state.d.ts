@@ -31,6 +31,4 @@ export interface AppState {
   activeDialogId: string | null; // which element, if any, is active
   loadingQueue: string[];
   status: AppStatus;
-
-  renderScanlines: boolean; // should scanlines be enabled?
 }

@@ -11,6 +11,8 @@ import {
   Dialog,
 } from "@/cassette-jsx";
 
+import map from "@/cassettes/ypsilon14/ypsilon14-map.png";
+
 const corp = "Ishiyama Dynamics";
 
 const Home = () => {
@@ -52,7 +54,7 @@ const Map = () => {
       <Line>Station Map</Line>
       <Line>==========</Line>
       <Br />
-      <Bitmap src="https://i.imgur.com/htHuumj.png" style="lighten" />
+      <Bitmap src={map.src} style="lighten" />
       <Br />
       <Line>A copy of the map is now available via data tablet.</Line>
       <Br />
