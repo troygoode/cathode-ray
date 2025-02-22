@@ -39,10 +39,15 @@ function generateCassetteSelectionList(
       link(`> ${cassette.meta.name}`, `/c/${encode(cassette.meta.name)}`)
     );
     if (cassette.meta.author?.length) {
-      result.push(text(`: By: ${cassette.meta.author}`));
+      result.push(text(`* By: ${cassette.meta.author}`));
+    }
+    if (cassette.meta.website?.length) {
+      result.push(
+        link(`* Website: ${cassette.meta.website}`, cassette.meta.website)
+      );
     }
     if (cassette.meta.comment?.length) {
-      result.push(text(`: ${cassette.meta.comment}`));
+      result.push(text(`* Comment: ${cassette.meta.comment}`));
     }
   }
   return result;
@@ -62,9 +67,9 @@ function createMetaCassette(cassettes: ICassette[]): ICassette {
       "https://github.com/troygoode/cathode-ray"
     ),
     "\n",
-    text("==========================="),
-    text("Select a CASSETTE to begin:"),
-    text("==========================="),
+    text("=========================="),
+    text("Select a CASSETTE to load:"),
+    text("=========================="),
     generateCassetteSelectionList(cassettes),
   ].flat();
 

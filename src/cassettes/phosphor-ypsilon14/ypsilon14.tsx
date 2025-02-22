@@ -469,7 +469,8 @@ export default function Ypsilon14() {
       name="The Haunting of Ypsilon-14 (Original Phosphor Version)"
       title={`${names.station} Main Computer`}
       author="@redhg"
-      comment="Phosphor content file for the 'Haunting of Ypsilon-14' module for the Mothership tabletop roleplaying game. Visit https://redhg.com/ypsilon14/ to see the compiled application."
+      comment="Phosphor content file for the 'Haunting of Ypsilon-14' module for the Mothership tabletop roleplaying game."
+      website="https://redhg.com/ypsilon14/"
     >
       <Home />
       <MainMenu />

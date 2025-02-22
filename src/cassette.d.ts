@@ -97,5 +97,6 @@ export interface ICassette {
     title?: string;
     author?: string;
     comment?: string;
+    website?: string;
   };
 }

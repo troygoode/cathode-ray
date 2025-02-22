@@ -164,6 +164,7 @@ const parseCassette = (node: TNode): ICassette => {
       title: att["title"],
       author: att["author"],
       comment: att["comment"],
+      website: att["website"],
     },
     screens:
       branch.children?.filter(isNamed("CathodeRay_Screen")).map(parseScreen) ||

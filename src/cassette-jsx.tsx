@@ -5,6 +5,7 @@ export type CassetteProps = {
   title?: string;
   author?: string;
   comment?: string;
+  website?: string;
 };
 function CathodeRay_Cassette(props: PropsWithChildren<CassetteProps>) {
   return props.children;
