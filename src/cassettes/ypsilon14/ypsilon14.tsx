@@ -372,7 +372,10 @@ const Airlocks = () => {
       <Toggle>
         <ToggleOption>&gt; DOCKING BAY 2 :: UNLOCKED</ToggleOption>
         <ToggleOption>&gt; DOCKING BAY 2 :: LOCKED</ToggleOption>
+      </Toggle>
+      <Toggle>
         <ToggleOption>&gt; MINE SHAFT :: UNLOCKED</ToggleOption>
+        <ToggleOption>&gt; MINE SHAFT :: LOCKED</ToggleOption>
       </Toggle>
       <Back target="controlsunlocked" />
     </Screen>
