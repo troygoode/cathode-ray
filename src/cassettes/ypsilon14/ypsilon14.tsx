@@ -1,3 +1,4 @@
+import { Header } from "@/components/CathodeRay";
 import {
   Cassette,
   Screen,
@@ -47,20 +48,6 @@ function subtractDays(date: Date, days: number) {
   newDate.setDate(date.getDate() - days);
   return newDate;
 }
-
-function repeatString(str: string, num: number) {
-  return new Array(num + 1).join(str);
-}
-
-const Header = ({ label }: { label: string }) => {
-  return (
-    <Wrapper>
-      <Line>{label.toUpperCase()}</Line>
-      <Line>{repeatString("=", label.length)}</Line>
-      <Br />
-    </Wrapper>
-  );
-};
 
 const Back = ({
   label = "Back",
