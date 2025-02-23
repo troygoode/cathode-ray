@@ -131,7 +131,7 @@ const parseContent = (
     case "CathodeRay_Wrapper":
       return parseWrapper(content);
     default:
-      return "PARSER_ERROR: NO MATCH";
+      return `PARSER_ERROR, NO MATCH: ${content.name}`;
   }
 };
 

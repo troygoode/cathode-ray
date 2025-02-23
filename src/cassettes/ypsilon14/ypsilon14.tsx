@@ -1,20 +1,28 @@
-import { Header } from "@/components/CathodeRay";
+import {
+  Header,
+  Next,
+  Back,
+  LockedLink,
+  P,
+  Map,
+  LockedDialog,
+  Roster,
+  Flip,
+  DialogLink,
+  PasswordRedirect,
+  Loading,
+  Timeline,
+} from "@/components/CathodeRay";
 import {
   Cassette,
   Screen,
   Line,
   Br,
   Link,
-  Bitmap,
-  Toggle,
-  ToggleOption,
-  Prompt,
   Dialog,
-  Wrapper,
 } from "@/components/CathodeRay/Core";
 
 import map from "@/cassettes/ypsilon14/ypsilon14-map.png";
-import { PropsWithChildren } from "react";
 
 const password = "chapman"; // hat tip to the author of the Haunting of Ypsilon-14: D. G. Chapman
 const today = new Date(2366, 6, 2);
@@ -36,84 +44,7 @@ const names = {
   },
 };
 
-function formatDate(date: Date) {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-    2,
-    "0"
-  )}-${String(date.getDate()).padStart(2, "0")}`;
-}
-
-function subtractDays(date: Date, days: number) {
-  const newDate = new Date(date);
-  newDate.setDate(date.getDate() - days);
-  return newDate;
-}
-
-const Back = ({
-  label = "Back",
-  target,
-}: {
-  label?: string;
-  target: string;
-}) => {
-  return (
-    <Wrapper>
-      <Br />
-      <Line>==========</Line>
-      <Br />
-      <Link target={target}>&lt; {label.toUpperCase()}</Link>
-    </Wrapper>
-  );
-};
-
-type TLockedLinkProps = {
-  ifLockedTarget?: string;
-  ifLockedTargetType?: "dialog" | "link";
-  hackable?: boolean;
-  type: "link" | "dialog";
-  target: string;
-};
-const LockedLink = ({
-  children,
-  ifLockedTarget = "lockedDialog",
-  ifLockedTargetType = "dialog",
-  hackable = false,
-  target,
-  type,
-}: PropsWithChildren<TLockedLinkProps>) => {
-  return hackable ? (
-    <Link
-      target={[
-        {
-          target: ifLockedTarget,
-          type: ifLockedTargetType,
-          shiftKey: false,
-        },
-        {
-          target,
-          type,
-          shiftKey: true,
-        },
-      ]}
-    >
-      {children}
-    </Link>
-  ) : (
-    <Link
-      target={[
-        {
-          target: ifLockedTarget,
-          type: ifLockedTargetType,
-          shiftKey: false,
-        },
-      ]}
-    >
-      {children}
-    </Link>
-  );
-};
-
-const Home = () => {
+const Y14Home = () => {
   return (
     <Screen id="home">
       <Header label={names.station} />
@@ -122,18 +53,16 @@ const Home = () => {
         {names.corp.toUpperCase()}&copy;, where innovation is our top
         priority&trade;.
       </Line>
-      <Line>==========</Line>
-      <Br />
-      <Link target="menu">&gt; ACCEPT EULA & LOGIN</Link>
+      <Next target="menu" label="ACCEPT EULA & LOGIN" />
     </Screen>
   );
 };
 
-const MainMenu = () => {
+const Y14Menu = () => {
   return (
     <Screen id="menu">
       <Header label="Main Menu" />
-      <Link target="map">&gt; STATION MAP</Link>
+      <Link target="schematic">&gt; STATION SCHEMATIC</Link>
       <Link target="diagnostics">&gt; DIAGNOSTICS</Link>
       <Link target="schedule">&gt; SCHEDULE</Link>
       <Link target="roster">&gt; ROSTER</Link>
@@ -143,35 +72,28 @@ const MainMenu = () => {
   );
 };
 
-const Map = () => {
+const Y14Schematic = () => {
   return (
-    <Screen id="map">
-      <Header label="Station Map" />
-      <Bitmap src={map.src} style="lighten" />
-      <Br />
-      <Line>A copy of the map is now available via data tablet.</Line>
+    <Screen id="schematic">
+      <Header label="Station Schematic" />
+      <Map image={map} />
       <Back target="menu" />
     </Screen>
   );
 };
 
-const Diagnostics = () => {
+const Y14Diagnostics = () => {
   return (
     <Screen id="diagnostics">
       <Header label="Diagnostics" />
       <Line>Checking life support.............. OK.</Line>
-      <Line>Checking main systems.............. OK.</Line>
-      <Br />
+      <P>Checking main systems.............. OK.</P>
       <Line style="alert">
         WARNING: Airflow 82.4%. Check vents for blockage.
       </Line>
-      <Line style="alert">
-        WARNING: Shower #5 non-functional as of 1 day(s) ago.
-      </Line>
-      <Br />
+      <P style="alert">WARNING: Shower #5 non-functional as of 1 day(s) ago.</P>
       <Line>NOTICE: Air filters replaced 143 day(s) ago.</Line>
-      <Line>NOTICE: Mineshaft lift maintained 455 day(s) ago.</Line>
-      <Br />
+      <P>NOTICE: Mineshaft lift maintained 455 day(s) ago.</P>
       <Line>SUMMARY:</Line>
       <Line>All systems operating within acceptible parameters.</Line>
       <Back target="menu" />
@@ -179,82 +101,59 @@ const Diagnostics = () => {
   );
 };
 
-const Schedule = () => {
+const Y14Schedule = () => {
   return (
     <Screen id="schedule">
       <Header label="Schedule" />
-      <Line>Docking bay activity (past 6 months):</Line>
-      <Br />
-      <Line>
-        {formatDate(today)}.0633 - Bay 2 : Arrive ::{" "}
-        {names.playerShip.toUpperCase()}
-      </Line>
-      <Line>
-        {formatDate(subtractDays(today, 28))}.0834 - Bay 1 : Arrive :: RSV
-        HERACLES
-      </Line>
-      <Line>
-        {formatDate(subtractDays(today, 30))}.1223 - Bay 1 : Depart :: CTV HORN
-        OF PLENTY
-      </Line>
-      <Line>
-        {formatDate(subtractDays(today, 31))}.1604 - Bay 1 : Arrive :: CTV HORN
-        OF PLENTY
-      </Line>
-      <Line>
-        {formatDate(subtractDays(today, 58))}.1223 - Bay 1 : Depart :: MSV
-        VASQUEZ XV
-      </Line>
-      <Line>
-        {formatDate(subtractDays(today, 59))}.1604 - Bay 1 : Arrive :: MSV
-        VASQUEZ XV
-      </Line>
-      <Line>
-        {formatDate(subtractDays(today, 84))}.1223 - Bay 1 : Depart :: CTV HORN
-        OF PLENTY
-      </Line>
-      <Line>
-        {formatDate(subtractDays(today, 85))}.1604 - Bay 1 : Arrive :: CTV HORN
-        OF PLENTY
-      </Line>
-      <Line>
-        {formatDate(subtractDays(today, 128))}.1223 - Bay 1 : Depart :: MSV
-        VASQUEZ XV
-      </Line>
-      <Line>
-        {formatDate(subtractDays(today, 129))}.1604 - Bay 1 : Arrive :: MSV
-        VASQUEZ XV
-      </Line>
+      <P>Docking bay activity (past 6 months):</P>
+      <Timeline
+        start={today}
+        events={[
+          [0, ["Bay 2", "Arrive", names.playerShip.toUpperCase()]],
+          [28, ["Bay 1", "Arrive", "RSV HERACLES"]],
+          [30, ["Bay 1", "Depart", "CTV HORN OF PLENTY"]],
+          [31, ["Bay 1", "Arrive", "CTV HORN OF PLENTY"]],
+          [58, ["Bay 1", "Depart", "MSV VASQUEZ XV"]],
+          [59, ["Bay 1", "Arrive", "MSV VASQUEZ XV"]],
+          [84, ["Bay 2", "Depart", "CTV HORN OF PLENTY"]],
+          [85, ["Bay 2", "Arrive", "CTV HORN OF PLENTY"]],
+          [128, ["Bay 1", "Depart", "MSV VASQUEZ XV"]],
+          [129, ["Bay 1", "Arrive", "MSV VASQUEZ XV"]],
+        ]}
+      />
       <Back target="menu" />
     </Screen>
   );
 };
 
-const Roster = () => {
+const Y14Roster = () => {
   return (
     <Screen id="roster">
       <Header label="Roster" />
-      <Line>01. {names.roster.sonya}</Line>
-      <Line>02. {names.roster.ashraf}</Line>
-      <Line>03. {names.roster.dana}</Line>
-      <Line>04. {names.roster.jerome}</Line>
-      <Line>05. {names.roster.kantaro}</Line>
-      <Line>06. {names.roster.morgan}</Line>
-      <Line>07. {names.roster.rie}</Line>
-      <Line>08. {names.roster.rosa}</Line>
-      <Line>09. {names.roster.mike}</Line>
-      <Line>10. {names.roster.unused}</Line>
+      <Roster
+        names={[
+          names.roster.sonya,
+          names.roster.ashraf,
+          names.roster.dana,
+          names.roster.jerome,
+          names.roster.kantaro,
+          names.roster.morgan,
+          names.roster.rie,
+          names.roster.rosa,
+          names.roster.mike,
+          names.roster.unused,
+        ]}
+      />
       <Back target="menu" />
     </Screen>
   );
 };
 
-const Comms = () => {
+const Y14Comms = () => {
   return (
     <Screen id="comms">
       <Header label="Comms" />
-      <Line>2 vessels detected in proximity.</Line>
-      <Br />
+      <P>2 vessels detected in proximity.</P>
       <Link target="hailplayership">
         &gt; HAIL {names.playerShip.toUpperCase()}
       </Link>
@@ -264,12 +163,11 @@ const Comms = () => {
   );
 };
 
-const HailPlayerShip = () => {
+const Y14HailPlayerShip = () => {
   return (
     <Screen id="hailplayership">
       <Header label="Transmitting" />
-      <Line>..........................................</Line>
-      <Line>..........................................</Line>
+      <Loading lines={2} />
       <Br />
       <Line>
         COMMUNICATION CHANNEL OPENED WITH {names.playerShip.toUpperCase()}
@@ -279,14 +177,11 @@ const HailPlayerShip = () => {
   );
 };
 
-const HailHeracles = () => {
+const Y14HailHeracles = () => {
   return (
     <Screen id="hailheracles">
       <Header label="Transmitting" />
-      <Line>..........................................</Line>
-      <Line>..........................................</Line>
-      <Line>..........................................</Line>
-      <Line>..........................................</Line>
+      <Loading lines={4} />
       <Br />
       <Line style="alert">NO RESPONSE FROM RSV HERACLES</Line>
       <Back target="comms" label="Close Channel" />
@@ -294,40 +189,27 @@ const HailHeracles = () => {
   );
 };
 
-const Controls = () => {
+const Y14Controls = () => {
   return (
     <Screen id="controls">
       <Header label="Controls" />
       <Link target="showers">&gt; SHOWERS</Link>
       <Link target="greenhouse">&gt; HYDROPONICS LAB</Link>
-      <LockedLink target="airlocks" type="link">
-        &gt; AIRLOCKS [A]
-      </LockedLink>
-      <LockedLink target="system" type="link">
-        &gt; SYSTEM [A]
-      </LockedLink>
+      <LockedLink target="airlocks">&gt; AIRLOCKS [A]</LockedLink>
+      <LockedLink target="system">&gt; SYSTEM [A]</LockedLink>
       <Br />
-      <Line>[A] :: Administrator access only</Line>
-      <Br />
-      <Prompt
-        commands={[
-          {
-            command: password,
-            action: {
-              type: "link",
-              target: "controlsunlocked",
-            },
-          },
-        ]}
-      >
-        Enter security code to unlock:
-      </Prompt>
+      <P>[A] :: Administrator access only</P>
+      <PasswordRedirect
+        password={password}
+        target="controlsunlocked"
+        label="Enter security code to unlock:"
+      />
       <Back target="menu" />
     </Screen>
   );
 };
 
-const ControlsUnlocked = () => {
+const Y14ControlsUnlocked = () => {
   return (
     <Screen id="controlsunlocked">
       <Header label="Controls" />
@@ -340,79 +222,48 @@ const ControlsUnlocked = () => {
   );
 };
 
-const Airlocks = () => {
+const Y14Airlocks = () => {
   return (
     <Screen id="airlocks">
       <Header label="Airlocks" />
-      <Link
-        target={[
-          {
-            target: "airlockError",
-            type: "dialog",
-            shiftKey: false,
-          },
-        ]}
+      <DialogLink
+        dialog="airlockError"
         style="alert"
-      >
-        &gt; DOCKING BAY 1 :: LOCKED — ERROR
-      </Link>
-      <Toggle>
-        <ToggleOption>&gt; DOCKING BAY 2 :: UNLOCKED</ToggleOption>
-        <ToggleOption>&gt; DOCKING BAY 2 :: LOCKED</ToggleOption>
-      </Toggle>
-      <Toggle>
-        <ToggleOption>&gt; MINE SHAFT :: UNLOCKED</ToggleOption>
-        <ToggleOption>&gt; MINE SHAFT :: LOCKED</ToggleOption>
-      </Toggle>
+        label="&gt; DOCKING BAY 1 :: LOCKED &mdash; ERROR"
+      />
+      <Flip prefix="&gt; DOCKING BAY 2 :: " options={["UNLOCKED", "LOCKED"]} />
+      <Flip prefix="&gt; MINE ELEVATOR :: " options={["UNLOCKED", "LOCKED"]} />
       <Back target="controlsunlocked" />
     </Screen>
   );
 };
 
-const Showers = () => {
+const Y14Showers = () => {
   return (
     <Screen id="showers">
       <Header label="Showers" />
-      <Toggle>
-        <ToggleOption>&gt; SHOWER 1 :: OFF</ToggleOption>
-        <ToggleOption>&gt; SHOWER 1 :: ON</ToggleOption>
-      </Toggle>
-      <Toggle>
-        <ToggleOption>&gt; SHOWER 2 :: OFF</ToggleOption>
-        <ToggleOption>&gt; SHOWER 2 :: ON</ToggleOption>
-      </Toggle>
-      <Toggle>
-        <ToggleOption>&gt; SHOWER 3 :: OFF</ToggleOption>
-        <ToggleOption>&gt; SHOWER 3 :: ON</ToggleOption>
-      </Toggle>
-      <Toggle>
-        <ToggleOption>&gt; SHOWER 4 :: OFF</ToggleOption>
-        <ToggleOption>&gt; SHOWER 4 :: ON</ToggleOption>
-      </Toggle>
+      <Flip prefix="&gt; SHOWER 1 :: " options={["OFF", "ON"]} />
+      <Flip prefix="&gt; SHOWER 2 :: " options={["OFF", "ON"]} />
+      <Flip prefix="&gt; SHOWER 3 :: " options={["OFF", "ON"]} />
+      <Flip prefix="&gt; SHOWER 4 :: " options={["OFF", "ON"]} />
       <Line style="alert">&gt; SHOWER 5 :: MALFUNCTIONING</Line>
-      <Toggle>
-        <ToggleOption>&gt; SHOWER 6 :: OFF</ToggleOption>
-        <ToggleOption>&gt; SHOWER 6 :: ON</ToggleOption>
-      </Toggle>
+      <Flip prefix="&gt; SHOWER 6 :: " options={["OFF", "ON"]} />
       <Back target="controls" />
     </Screen>
   );
 };
 
-const Greenhouse = () => {
+const Y14Greenhouse = () => {
   return (
     <Screen id="greenhouse">
       <Header label="Hydroponics Lab" />
-      <Toggle>
-        <ToggleOption>&gt; MIST HYDRATION :: OFF</ToggleOption>
-        <ToggleOption>&gt; MIST HYDRATION :: ON</ToggleOption>
-      </Toggle>
+      <Flip prefix="&gt; MIST HYDRATION :: " options={["OFF", "ON"]} />
       <Back target="controls" />
     </Screen>
   );
 };
 
-const System = () => {
+const Y14System = () => {
   return (
     <Screen id="system">
       <Header label="System" />
@@ -423,72 +274,56 @@ const System = () => {
   );
 };
 
-const LifeSupport = () => {
+const Y14LifeSupport = () => {
   return (
     <Screen id="lifesupport">
       <Header label="Life Support" />
-      <Line style="alert">
+      <P style="alert">
         WARNING: Disabling life support is a violation of company policy 2478-A.
         {names.corp.toUpperCase()}&copy; assumes no responsibilities or
         liabilities resulting from the improper use of this feature.
-      </Line>
-      <Br />
-      <Toggle>
-        <ToggleOption>&gt; LIFE SUPPORT :: ENABLED</ToggleOption>
-        <ToggleOption>&gt; LIFE SUPPORT :: DISABLED</ToggleOption>
-      </Toggle>
+      </P>
+      <Flip prefix="&gt; LIFE SUPPORT :: " options={["ENABLED", "DISABLED"]} />
       <Back target="system" />
     </Screen>
   );
 };
 
-const SelfDestruct = () => {
+const Y14SelfDestruct = () => {
   return (
     <Screen id="selfdestruct">
       <Header label="Self-Destruct" />
-      <Line style="alert">
+      <P style="alert">
         WARNING: Destruction of corporate property is a violation of company
         policy 2478-B. {names.corp.toUpperCase()}&copy; assumes no
         responsibilities or liabilities resulting from the improper use of this
         feature.
-      </Line>
-      <Br />
+      </P>
       <Link target="selfdestructactivate">&gt; ACTIVATE SELF-DESTRUCT</Link>
       <Back target="system" />
     </Screen>
   );
 };
 
-const SelfDestructActivate = () => {
+const Y14SelfDestructActivate = () => {
   return (
     <Screen id="selfdestructactivate">
       <Header label="Self-Destruct" />
-      <Line style="alert">
+      <P style="alert">
         THIS WILL INITIATE A 10-MINUTE STATION SELF-DESTRUCT SEQUENCE.
-      </Line>
-      <Br />
-      <Line>THIS CANNOT BE UNDONE.</Line>
-      <Br />
-      <Prompt
-        style="alert"
-        commands={[
-          {
-            command: "ok",
-            action: {
-              type: "link",
-              target: "selfdestructevacuate",
-            },
-          },
-        ]}
-      >
-        TYPE &apos;OK&apos; TO BEGIN COUNTDOWN:
-      </Prompt>
+      </P>
+      <P>THIS CANNOT BE UNDONE.</P>
+      <PasswordRedirect
+        password="ok"
+        target="selfdestructevacuate"
+        label="TYPE 'OK' TO BEGIN COUNTDOWN: "
+      />
       <Back target="selfdestruct" />
     </Screen>
   );
 };
 
-const SelfDestructEvacuate = () => {
+const Y14SelfDestructEvacuate = () => {
   return (
     <Screen id="selfdestructevacuate">
       <Header label="Self-Destruct" />
@@ -498,25 +333,16 @@ const SelfDestructEvacuate = () => {
   );
 };
 
-const LockedDialog = () => {
-  return (
-    <Dialog id="lockedDialog" style="alert">
-      <Line>ERROR! Authorization required.</Line>
-    </Dialog>
-  );
-};
-
-const AirlockErrorDialog = () => {
+const Y14AirlockErrorDialog = () => {
   return (
     <Dialog id="airlockError" style="alert">
-      <Line>ERROR! Lock override in effect.</Line>
-      <Br />
+      <P>ERROR! Lock override in effect.</P>
       <Line>Cannot unlock remotely. Manual intervention required.</Line>
     </Dialog>
   );
 };
 
-export default function Ypsilon14() {
+export default function () {
   return (
     <Cassette
       name="001 The Haunting of Ypsilon-14"
@@ -525,27 +351,27 @@ export default function Ypsilon14() {
       website="https://github.com/troygoode/cathode-ray"
       comment='The security code is "CHAPMAN"'
     >
-      <Home />
-      <MainMenu />
-      <Map />
-      <Diagnostics />
-      <Schedule />
-      <Roster />
-      <Comms />
-      <HailPlayerShip />
-      <HailHeracles />
-      <Controls />
-      <ControlsUnlocked />
-      <Airlocks />
-      <Showers />
-      <Greenhouse />
-      <System />
-      <LifeSupport />
-      <SelfDestruct />
-      <SelfDestructActivate />
-      <SelfDestructEvacuate />
+      <Y14Home />
+      <Y14Menu />
+      <Y14Schematic />
+      <Y14Diagnostics />
+      <Y14Schedule />
+      <Y14Roster />
+      <Y14Comms />
+      <Y14HailPlayerShip />
+      <Y14HailHeracles />
+      <Y14Controls />
+      <Y14ControlsUnlocked />
+      <Y14Airlocks />
+      <Y14Showers />
+      <Y14Greenhouse />
+      <Y14System />
+      <Y14LifeSupport />
+      <Y14SelfDestruct />
+      <Y14SelfDestructActivate />
+      <Y14SelfDestructEvacuate />
       <LockedDialog />
-      <AirlockErrorDialog />
+      <Y14AirlockErrorDialog />
     </Cassette>
   );
 }

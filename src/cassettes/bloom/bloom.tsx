@@ -1,4 +1,16 @@
-import { PropsWithChildren } from "react";
+import {
+  LockedDialog,
+  Header,
+  Next,
+  Back,
+  LockedLink,
+  P,
+  Roster,
+  Timeline,
+  Map,
+  DialogLink,
+  Loading,
+} from "@/components/CathodeRay";
 import {
   Cassette,
   Screen,
@@ -7,8 +19,8 @@ import {
   Link,
   Bitmap,
   Dialog,
-  Wrapper,
 } from "@/components/CathodeRay/Core";
+import RNG from "@/utils/random";
 
 import logo from "./dyson-phytology.png";
 import murandal from "./murandal.png";
@@ -17,97 +29,21 @@ import orbitalSecurity from "./orbital-security.png";
 import groundSchematic from "./ground-schematic.png";
 import underwaterSchematic from "./underwater-schematic.png";
 import underwaterSecurity from "./underwater-security.png";
+import { formatDate, subtractDays } from "@/utils/datetime";
 
+const today = new Date(2366, 6, 2);
 const names = {
-  station: "Choi Output",
-  playerShip: "Tempest",
+  station: "Choi Outpost",
+  corp: "Dyson Phytology",
+  playerShip: "CTV Tempest",
 };
 
-function repeatString(str: string, num: number) {
-  return new Array(num + 1).join(str);
-}
-
-const Header = ({ label }: { label: string }) => {
-  return (
-    <Wrapper>
-      <Line>{label.toUpperCase()}</Line>
-      <Line>{repeatString("=", label.length)}</Line>
-      <Br />
-    </Wrapper>
-  );
-};
-
-const P = ({ children }: PropsWithChildren) => {
-  return (
-    <Wrapper>
-      <Line>{children}</Line>
-      <Br />
-    </Wrapper>
-  );
-};
-
-const Back = ({
-  label = "Back",
-  target,
-}: {
-  label?: string;
-  target: string;
-}) => {
-  return (
-    <Wrapper>
-      <Br />
-      <Line>==========</Line>
-      <Br />
-      <Link target={target}>&lt; {label.toUpperCase()}</Link>
-    </Wrapper>
-  );
-};
-
-type TLockedLinkProps = {
-  ifLockedTarget?: string;
-  ifLockedTargetType?: "dialog" | "link";
-  hackable?: boolean;
-  type: "link" | "dialog";
-  target: string;
-};
-const LockedLink = ({
-  children,
-  ifLockedTarget = "lockedDialog",
-  ifLockedTargetType = "dialog",
-  hackable = false,
-  target,
-  type,
-}: PropsWithChildren<TLockedLinkProps>) => {
-  return hackable ? (
-    <Link
-      target={[
-        {
-          target: ifLockedTarget,
-          type: ifLockedTargetType,
-          shiftKey: false,
-        },
-        {
-          target,
-          type,
-          shiftKey: true,
-        },
-      ]}
-    >
-      {children}
-    </Link>
-  ) : (
-    <Link
-      target={[
-        {
-          target: ifLockedTarget,
-          type: ifLockedTargetType,
-          shiftKey: false,
-        },
-      ]}
-    >
-      {children}
-    </Link>
-  );
+const seed = 3000;
+const rng = RNG(seed.toString());
+const randomName = () => {
+  const r = rng.name();
+  const role = rng.fromArray(["Engineer", "Scientist", "Security"]);
+  return `${r.last.toUpperCase()}, ${r.first} :: ${role}`;
 };
 
 const Home = () => {
@@ -115,12 +51,11 @@ const Home = () => {
     <Screen id="home">
       <Header label={`${names.station} Access Terminal`} />
       <Bitmap src={logo.src} style="transparent-bg" />
-      <Line>DYSON PHYTOLOGY&copy;</Line>
+      <Line>{names.corp.toUpperCase()}&copy;</Line>
       <P>THE FOREFRONT OF NATURAL CARE&trade;</P>
       <P>==========================</P>
       <P>Welcome to {names.station}.</P>
-      <P>==========================</P>
-      <Link target="menu">&gt; ACCEPT EULA &amp; LOG IN</Link>
+      <Next target="menu" label="ACCEPT EULA &amp; LOG IN" />
     </Screen>
   );
 };
@@ -131,8 +66,8 @@ const MainMenu = () => {
       <Header label="Main Menu" />
       <P>[A] :: Authorized access only</P>
       <Link target="facility">&gt; FACILITY TERMINALS</Link>
-      <LockedLink hackable={true} target="comms" type="link">
-        &gt; OUTPOST COMMS [A]
+      <LockedLink hackable={true} target="comms">
+        &gt; COMMUNICATIONS [A]
       </LockedLink>
       <Link target="planet">&gt; PLANET INFO</Link>
     </Screen>
@@ -144,13 +79,13 @@ const FacilityTerminals = () => {
     <Screen id="facility">
       <Header label="Facility Terminals" />
       <P>[A] :: Authorized access only</P>
-      <LockedLink hackable={true} target="orbital" type="link">
+      <LockedLink hackable={true} target="orbital">
         &gt; DELANGE ORBITAL STATION [A]
       </LockedLink>
-      <LockedLink hackable={true} target="ground" type="link">
+      <LockedLink hackable={true} target="ground">
         &gt; JAPLINE&apos;s ACHE GROUND HABITATION [A]
       </LockedLink>
-      <LockedLink hackable={true} target="underwater" type="link">
+      <LockedLink hackable={true} target="underwater">
         &gt; CHOI UNDERWATER LABS [A]
       </LockedLink>
       <Back target="menu" />
@@ -176,9 +111,7 @@ const OrbitalSchematic = () => {
   return (
     <Screen id="orbitalschematic">
       <Header label="Delange Orbital Schematic" />
-      <Bitmap src={orbitalSchematic.src} />
-      <Br />
-      <Line>A copy of the map is now available via data tablet.</Line>
+      <Map image={orbitalSchematic} />
       <Back target="orbital" />
     </Screen>
   );
@@ -196,9 +129,13 @@ const OrbitalPersonnel = () => {
   return (
     <Screen id="orbitalpersonnel">
       <Header label="Personnel" />
-      <Line>01. SINGH, Ashraf :: Delange Admin</Line>
-      <Line>02. CHATZKEL, Jerome :: Security</Line>
-      <Line>03. TOBIN, Rosa :: Engineer</Line>
+      <Roster
+        names={[
+          "SINGH, Ashraf :: Delange Admin",
+          "CHATZKEL, Jerome :: Security",
+          "TOBIN, Rosa :: Engineer",
+        ]}
+      />
       <Back target="orbital" />
     </Screen>
   );
@@ -236,11 +173,16 @@ const OrbitalDocks = () => {
     <Screen id="orbitaldocks">
       <Header label="Dock Activity" />
       <P>Docking bay activity (past 6 months):</P>
-      <Line>2366-04-28.0633 - Bay 1 : Arrive :: Tempest</Line>
-      <Line>2366-04-29.0834 - Bay 1 : Depart :: Tempest</Line>
-      <Line>2366-06-19.1223 - Bay 1 : Arrive :: Tempest</Line>
-      <Line>2366-06-20.1604 - Bay 1 : Depart :: Tempest</Line>
-      <Line>2366-08-23.1004 - Bay 1 : Arrive :: Tempest</Line>
+      <Timeline
+        start={today}
+        events={[
+          [0, ["Bay 1", "Arrive", names.playerShip]],
+          [1, ["Bay 1", "Depart", names.playerShip]],
+          [57, ["Bay 1", "Arrive", names.playerShip]],
+          [58, ["Bay 1", "Depart", names.playerShip]],
+          [86, ["Bay 1", "Arrive", names.playerShip]],
+        ]}
+      />
       <Back target="orbital" />
     </Screen>
   );
@@ -250,7 +192,9 @@ const OrbitalCargo = () => {
     <Screen id="orbitalcargo">
       <Header label="Cargo Registry" />
       <P>Files available: 0</P>
-      <Line>Last scheduled data purge was on: 2366-08-20.1000</Line>
+      <Line>
+        Last scheduled data purge was on: {formatDate(subtractDays(today, 3))}
+      </Line>
       <Back target="orbital" />
     </Screen>
   );
@@ -274,9 +218,7 @@ const GroundSchematic = () => {
   return (
     <Screen id="groundschematic">
       <Header label="Japline Ground Habitation Schematic" />
-      <Bitmap src={groundSchematic.src} />
-      <Br />
-      <Line>A copy of the map is now available via data tablet.</Line>
+      <Map image={groundSchematic} />
       <Back target="ground" />
     </Screen>
   );
@@ -306,8 +248,8 @@ const GroundAdmin = () => {
       <Header label="Summary" />
       <Line>All systems operating within acceptable levels.</Line>
       <Line style="alert">
-        Outpost severely understaffed. Please contact DYSON PHYTOLOGY&copy;
-        Human Resources Department.
+        Outpost severely understaffed. Please contact {names.corp.toUpperCase()}
+        &copy; Human Resources Department.
       </Line>
       <Back target="ground" />
     </Screen>
@@ -364,9 +306,9 @@ const GroundGarage = () => {
       <Line>Checking main systems................... OK.</Line>
       <Br />
       <Header label="Available Equipment" />
-      <Line>* Surveillance Equipment</Line>
-      <Line>* Vehicle Batteries</Line>
-      <Line>* Vehicle Spart Parts</Line>
+      <Line>Surveillance Equipment</Line>
+      <Line>Vehicle Batteries</Line>
+      <Line>Vehicle Spart Parts</Line>
       <Br />
       <Line style="alert">WARNING: Vehicle battery depleted.</Line>
       <Br />
@@ -380,18 +322,22 @@ const GroundPersonnel = () => {
   return (
     <Screen id="groundpersonnel">
       <Header label="Personnel" />
-      <Line>01. BALE, Reymond :: Japline Admin</Line>
-      <Line>02. LEWARDS, JAMIE :: Scientist</Line>
-      <Line>03. JACKSON, Lilley :: Engineer</Line>
-      <Line>04. ROBELL, Randy :: Scientist</Line>
-      <Line>05. BENNEZ, Micha :: Engineer</Line>
-      <Line>06. SONEZ, Lice :: Engineer</Line>
-      <Line>07. CAMPBUTL, Lilley :: Engineer</Line>
-      <Line>08. MITCHY, Rancia :: Scientist</Line>
-      <Line>09. WARTE, Brankeith :: Security</Line>
-      <Line>10. JAMITH, Pamy :: Scientist</Line>
-      <Line>11. WATSON, Beccia :: Engineer</Line>
-      <Line>12. REZAL, Terry :: Scientist</Line>
+      <Roster
+        names={[
+          "BALE, Reymond :: Japline Admin",
+          "LEWARDS, JAMIE :: Scientist",
+          "JACKSON, Lilley :: Engineer",
+          "ROBELL, Randy :: Scientist",
+          "BENNEZ, Micha :: Engineer",
+          "SONEZ, Lice :: Engineer",
+          "CAMPBUTL, Lilley :: Engineer",
+          "MITCHY, Rancia :: Scientist",
+          "WARTE, Brankeith :: Security",
+          "JAMITH, Pamy :: Scientist",
+          "WATSON, Beccia :: Engineer",
+          "REZAL, Terry :: Scientist",
+        ]}
+      />
       <Back target="ground" />
     </Screen>
   );
@@ -407,9 +353,7 @@ const Underwater = () => {
       <Link target="underwaterdiagnostics">&gt; DIAGNOSTICS</Link>
       <Link target="underwaterairlock">&gt; AIRLOCK STATUS</Link>
       <Link target="underwaterequipment">&gt; EQUIPMENT STOCKS</Link>
-      <Link target={{ target: "upload-error", type: "dialog" }}>
-        &gt; UPLOAD ORBITAL DATA DUMP
-      </Link>
+      <DialogLink dialog="upload-error" label="&gt; UPLOAD ORBITAL DATA DUMP" />
       <Back target="facility" />
     </Screen>
   );
@@ -418,9 +362,7 @@ const UnderwaterSchematic = () => {
   return (
     <Screen id="underwaterschematic">
       <Header label="Choi Lab Schematic" />
-      <Bitmap src={underwaterSchematic.src} />
-      <Br />
-      <Line>A copy of the map is now available via data tablet.</Line>
+      <Map image={underwaterSchematic} />
       <Back target="underwater" />
     </Screen>
   );
@@ -434,83 +376,14 @@ const UnderwaterSecurity = () => {
     </Screen>
   );
 };
+
 const UnderwaterPersonnel = () => {
+  const roster = [...Array(72).keys()].map(() => randomName());
+  roster.unshift("TAIBHSE, Eunha :: Choi Lab Admin");
   return (
     <Screen id="underwaterpersonnel">
       <Header label="Personnel" />
-      <Line>01.TAIBHSE, Eunha :: Choi Lab Admin</Line>
-      <Line>02.ALES, Bever :: Engineer</Line>
-      <Line>03.ROBERTS, Jacquel :: Scientist</Line>
-      <Line>04.BENNEZ, Bever :: Scientist</Line>
-      <Line>05.BAKER, Lilley :: Engineer</Line>
-      <Line>06.MITHY, Lice :: Engineer</Line>
-      <Line>07.LESON, Jacquel :: Scientist</Line>
-      <Line>08.REZAL, Rice :: Security</Line>
-      <Line>09.ROBERTS, Ruan :: Security</Line>
-      <Line>10.GUEZAL, Donna :: Scientist</Line>
-      <Line>11.DAVER, Terry :: Scientist</Line>
-      <Line>12.JAMITH, Nathua :: Scientist</Line>
-      <Line>13.BAKER, Katha :: Scientist</Line>
-      <Line>14.LEWARDS, Hene :: Security</Line>
-      <Line>15.ROBELL, Beverl :: Scientist</Line>
-      <Line>16.TAYLY, Katha :: Scientist</Line>
-      <Line>17.CARTE, Terry :: Scientist</Line>
-      <Line>18.ROBELL, Juany :: Scientist</Line>
-      <Line>19.GUEZAL, Lice :: Engineer</Line>
-      <Line>20.TAYLY, Juany :: Scientist</Line>
-      <Line>21.WATSON, Rilia :: Scientist</Line>
-      <Line>22.REZAL, Kimby :: Scientist</Line>
-      <Line>23.BENNEZ, Donna :: Scientist</Line>
-      <Line>24.MITCHY, Jane :: Scientist</Line>
-      <Line>25.GRIGHTE, Lilley :: Engineer</Line>
-      <Line>26.BARNAND, Rancia :: Scientist</Line>
-      <Line>27.BARNAND, Riley :: Engineer</Line>
-      <Line>28.LEWARDS, Jane :: Scientist</Line>
-      <Line>29.REZAL, Beccia :: Engineer</Line>
-      <Line>30.GRIGHTE, Wardy :: Security</Line>
-      <Line>31.DERSON, Miny :: Scientist</Line>
-      <Line>32.BAKER, Juany :: Scientist</Line>
-      <Line>33.MAZAL, Pamy :: Scientist</Line>
-      <Line>34.MASON, Altes :: Engineer</Line>
-      <Line>35.JAMITH, Juane :: Security</Line>
-      <Line>36.HENDERS, Clane :: Scientist</Line>
-      <Line>37.WARTE, Beccia :: Engineer</Line>
-      <Line>38.SONEZ, Rice :: Security</Line>
-      <Line>39.SONEZ, Jamy :: Scientist</Line>
-      <Line>40.MITCHY, Lice :: Engineer</Line>
-      <Line>41.NEZAL, Jane :: Scientist</Line>
-      <Line>42.ARTIN, Brankeith :: Security</Line>
-      <Line>43.WATSON, Jane :: Scientist</Line>
-      <Line>44.TERSON, Juane :: Security</Line>
-      <Line>45.CAMPBUTL, Tine :: Engineer</Line>
-      <Line>46.HENDERS, Jacquel :: Scientist</Line>
-      <Line>47.MITHY, Miny :: Scientist</Line>
-      <Line>48.HELLEY, Tine :: Engineer</Line>
-      <Line>49.ROBELL, Risa :: Scientist</Line>
-      <Line>50.CARTE, Lice :: Engineer</Line>
-      <Line>51.DERSON, Kimberly :: Engineer</Line>
-      <Line>52.ARTIN, Tine :: Engineer</Line>
-      <Line>53.GUEZAL, Carly :: Engineer</Line>
-      <Line>54.COLEE, Wardy :: Security</Line>
-      <Line>55.TAYLY, Randy :: Scientist</Line>
-      <Line>56.BAKER, Ruan :: Security</Line>
-      <Line>57.COLEE, Jacquel :: Scientist</Line>
-      <Line>58.LESON, Rilia :: Scientist</Line>
-      <Line>59.ROBELL, Nety :: Scientist</Line>
-      <Line>60.DERSON, Netia :: Engineer</Line>
-      <Line>61.MASON, Nathua :: Scientist</Line>
-      <Line>62.BAKER, Rilia :: Scientist</Line>
-      <Line>63.CARTE, Jamie :: Scientist</Line>
-      <Line>64.JACKSON, Brankeith :: Security</Line>
-      <Line>65.SONEZ, Jane :: Scientist</Line>
-      <Line>66.MITHY, Bever :: Scientist</Line>
-      <Line>67.ROBELL, Tine :: Engineer</Line>
-      <Line>68.ROBELL, Arymo :: Scientist</Line>
-      <Line>69.TAYLY, Randy :: Scientist</Line>
-      <Line>70.JACKSON, Jamie :: Scientist</Line>
-      <Line>71.BAKER, Donna :: Scientist</Line>
-      <Line>72.REZAL, Clane :: Scientist</Line>
-      <Line>73.GRIGHTE, Juane :: Security</Line>
+      <Roster names={roster} />
       <Back target="underwater" />
     </Screen>
   );
@@ -569,8 +442,8 @@ const UnderwaterDiagnostics = () => {
       <Br />
       <Header label="Summary" />
       <Line style="alert">
-        Facility status CRITICAL. Please evacuate and contact DYSON
-        PHYTOLOGY&copy; Facility Maintenance Department.
+        Facility status CRITICAL. Please evacuate and contact{" "}
+        {names.corp.toUpperCase()}&copy; Facility Maintenance Department.
       </Line>
       <Back target="underwater" />
     </Screen>
@@ -642,8 +515,7 @@ const CommsPlayerShip = () => {
   return (
     <Screen id="commsplayership">
       <Header label="Transmitting" />
-      <Line>..........................................</Line>
-      <Line>..........................................</Line>
+      <Loading lines={2} />
       <Br />
       <Line>
         COMMUNICATION CHANNEL OPENED WITH {names.playerShip.toUpperCase()}
@@ -657,15 +529,21 @@ const CommsMessages = () => {
     <Screen id="commsmessages">
       <Header label="Messages" />
       <P>Authorized messages registered last month: 2</P>
-      <Link target="commsmessage1">&gt; 2366-08-15.0915</Link>
-      <Link target="commsmessage2">&gt; 2366-08-11.0804</Link>
+      <Link target="commsmessage1">
+        &gt; {formatDate(subtractDays(today, 5))}
+      </Link>
+      <Link target="commsmessage2">
+        &gt; {formatDate(subtractDays(today, 8))}
+      </Link>
       <Br />
-      <P>Unauthorized messages declined or purged last month:</P>
-      <Line>2366-08-16: 4</Line>
-      <Line>2366-08-17: 55</Line>
-      <Line>2366-08-18: 157</Line>
-      <Line>2366-08-19: 2</Line>
-      <Line>2366-08-20: 1</Line>
+      <P>Unauthorized messages declined or purged last week:</P>
+      <Line>{formatDate(subtractDays(today, 0))}: 1</Line>
+      <Line>{formatDate(subtractDays(today, 1))}: 2</Line>
+      <Line>{formatDate(subtractDays(today, 2))}: 59</Line>
+      <Line>{formatDate(subtractDays(today, 3))}: 55</Line>
+      <Line>{formatDate(subtractDays(today, 4))}: 39</Line>
+      <Line>{formatDate(subtractDays(today, 5))}: 457</Line>
+      <Line>{formatDate(subtractDays(today, 6))}: 11</Line>
       <Back target="comms" />
     </Screen>
   );
@@ -673,7 +551,7 @@ const CommsMessages = () => {
 const CommsMessage1 = () => {
   return (
     <Screen id="commsmessage1">
-      <P>DATE: 2366-08-15.0915</P>
+      <P>DATE: {formatDate(subtractDays(today, 5))}</P>
       <Line>FROM: Dr. Eunha Taibhse</Line>
       <P>TO: Asraf Singh, Reymond Bale</P>
       <P>SUBJECT: Containment Failure</P>
@@ -698,7 +576,7 @@ const CommsMessage1 = () => {
 const CommsMessage2 = () => {
   return (
     <Screen id="commsmessage2">
-      <P>DATE: 2366-08-11.0804</P>
+      <P>DATE: {formatDate(subtractDays(today, 8))}</P>
       <Line>FROM: Dr. Eunha Taibhse</Line>
       <P>TO: Asraf Singh, Reymond Bale</P>
       <P>SUBJECT: Mole</P>
@@ -766,15 +644,7 @@ const UploadErrorDialog = () => {
   );
 };
 
-const LockedDialog = () => {
-  return (
-    <Dialog id="lockedDialog" style="alert">
-      <Line>ERROR! Authorization required.</Line>
-    </Dialog>
-  );
-};
-
-export default function Ypsilon14() {
+export default function () {
   return (
     <Cassette
       name="002 Bloom"

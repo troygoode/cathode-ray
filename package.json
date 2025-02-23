@@ -13,12 +13,13 @@
   },
   "scripts": {
     "dev": "next dev --turbopack",
+    "lint": "next lint",
     "build": "set NODE_ENV=production && next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "npx serve@latest out"
   },
   "dependencies": {
     "next": "15.1.7",
+    "rand-seed": "^2.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

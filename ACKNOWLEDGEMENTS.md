@@ -21,3 +21,4 @@ https://github.com/gparali/gparali.github.io
 - CRT bevel effect from https://codepen.io/somethingformed/pen/raWJXV
 - Cat image from https://i.imgur.com/rDjphNY.jpg
 - Ypsilon-14 map from https://i.imgur.com/htHuumj.png
+- Random names from https://en.wikipedia.org/wiki/Moby_Project
