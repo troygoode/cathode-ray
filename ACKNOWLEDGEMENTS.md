@@ -6,12 +6,14 @@ https://github.com/redhg/phosphor
 
 ## Cassette Scripts
 
-Cassette: Bloom by gparali
-https://github.com/gparali/gparali.github.io
-
 Cassette: Ypsilon-14 by Breon Halling and some edits by traaa.sh
 https://github.com/redhg/phosphor
 https://www.traaa.sh/the-ypsilon-14-terminal
+
+Cassette: Bloom by gparali
+https://github.com/gparali/gparali.github.io
+
+(gparali also has their own Ypsilon-14 terminal, here: https://gparali.github.io/Terminal-Maker/)
 
 ## Art Assets
 
