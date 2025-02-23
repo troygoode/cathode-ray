@@ -4,11 +4,11 @@ export { Core };
 import { PropsWithChildren } from "react";
 import { formatDate, subtractDays } from "@/utils/datetime";
 
-export function Header({ label }: { label: string }) {
-  function repeatString(str: string, num: number) {
-    return new Array(num + 1).join(str);
-  }
+export function repeatString(str: string, num: number) {
+  return new Array(num + 1).join(str);
+}
 
+export function Header({ label }: { label: string }) {
   return (
     <Core.Wrapper>
       <Core.Line>{label.toUpperCase()}</Core.Line>
@@ -36,8 +36,7 @@ export function Back({
   return (
     <Core.Wrapper>
       <Core.Br />
-      <Core.Line>==========</Core.Line>
-      <Core.Br />
+      <Core.Line>{repeatString("=", 30)}</Core.Line>
       <Core.Link target={target}>&lt; {label.toUpperCase()}</Core.Link>
     </Core.Wrapper>
   );
@@ -53,8 +52,7 @@ export function Next({
   return (
     <Core.Wrapper>
       <Core.Br />
-      <Core.Line>==========</Core.Line>
-      <Core.Br />
+      <Core.Line>{repeatString("=", 30)}</Core.Line>
       <Core.Link target={target}>&gt; {label.toUpperCase()}</Core.Link>
     </Core.Wrapper>
   );

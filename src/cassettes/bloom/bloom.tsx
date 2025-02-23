@@ -52,9 +52,8 @@ const Home = () => {
       <Header label={`${names.station} Access Terminal`} />
       <Bitmap src={logo.src} style="transparent-bg" />
       <Line>{names.corp.toUpperCase()}&copy;</Line>
-      <P>THE FOREFRONT OF NATURAL CARE&trade;</P>
-      <P>==========================</P>
-      <P>Welcome to {names.station}.</P>
+      <Header label="The forefront of natural care&trade;" />
+      <Line>Welcome to {names.station}.</Line>
       <Next target="menu" label="ACCEPT EULA &amp; LOG IN" />
     </Screen>
   );
@@ -126,16 +125,12 @@ const OrbitalSecurity = () => {
   );
 };
 const OrbitalPersonnel = () => {
+  const roster = [...Array(2).keys()].map(() => randomName());
+  roster.unshift("SINGH, Ashraf :: Delange Admin");
   return (
     <Screen id="orbitalpersonnel">
       <Header label="Personnel" />
-      <Roster
-        names={[
-          "SINGH, Ashraf :: Delange Admin",
-          "CHATZKEL, Jerome :: Security",
-          "TOBIN, Rosa :: Engineer",
-        ]}
-      />
+      <Roster names={roster} />
       <Back target="orbital" />
     </Screen>
   );
@@ -319,25 +314,12 @@ const GroundGarage = () => {
   );
 };
 const GroundPersonnel = () => {
+  const roster = [...Array(11).keys()].map(() => randomName());
+  roster.unshift("BALE, Reymond :: Japline Admin");
   return (
     <Screen id="groundpersonnel">
       <Header label="Personnel" />
-      <Roster
-        names={[
-          "BALE, Reymond :: Japline Admin",
-          "LEWARDS, JAMIE :: Scientist",
-          "JACKSON, Lilley :: Engineer",
-          "ROBELL, Randy :: Scientist",
-          "BENNEZ, Micha :: Engineer",
-          "SONEZ, Lice :: Engineer",
-          "CAMPBUTL, Lilley :: Engineer",
-          "MITCHY, Rancia :: Scientist",
-          "WARTE, Brankeith :: Security",
-          "JAMITH, Pamy :: Scientist",
-          "WATSON, Beccia :: Engineer",
-          "REZAL, Terry :: Scientist",
-        ]}
-      />
+      <Roster names={roster} />
       <Back target="ground" />
     </Screen>
   );
