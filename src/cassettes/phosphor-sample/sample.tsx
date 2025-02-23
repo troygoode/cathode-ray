@@ -180,7 +180,11 @@ const LockedDialog = () => {
 
 export default function Ypsilon14() {
   return (
-    <Cassette name="998 Sample (Original Phosphor Version)" author="@redhg">
+    <Cassette
+      name="998 Sample (Original Phosphor Version)"
+      author="@redhg"
+      website="https://github.com/redhg/phosphor/"
+    >
       <Screen0 />
       <Screen1 />
       <Screen2 />

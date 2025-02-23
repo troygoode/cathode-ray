@@ -7,7 +7,7 @@ https://github.com/redhg/phosphor
 ## Cassette Scripts
 
 Cassette: Ypsilon-14 by Breon Halling and some edits by traaa.sh
-https://github.com/redhg/phosphor
+https://redhg.com/ypsilon14/
 https://www.traaa.sh/the-ypsilon-14-terminal
 
 Cassette: Bloom by gparali
