@@ -3,8 +3,8 @@ import {
   IScriptScreen,
   IScriptScreenContentBitmap,
   TScriptScreenContent,
-} from "@/cassette";
-import Phosphor from "@/components/Phosphor";
+} from "@/components/Phosphor/cassette";
+import Phosphor from "@/components/Phosphor/PhosphorInstance";
 import { encode } from "@/utils/hex";
 
 import logo from "@/assets/cathode-ray-logo.png";

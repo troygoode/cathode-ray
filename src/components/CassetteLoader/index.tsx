@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { encode, decode } from "@/utils/hex";
 import loadCassettes from "@/utils/load-cassettes";
-import Phosphor from "@/components/Phosphor";
+import Phosphor from "@/components/Phosphor/PhosphorInstance";
 import * as cassetteLibrary from "@/cassettes";
 
 export type TCassetteLoaderProps = {

@@ -1,7 +1,7 @@
 import type {
   IScriptScreenContentPromptCommand,
   IScriptScreenContentPromptCommandAction,
-} from "@/cassette";
+} from "@/components/Phosphor/cassette";
 import "./style.css";
 
 import React, { FC, useEffect, useRef, RefObject, useState } from "react";

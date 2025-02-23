@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import Scanlines from "@/components/Scanlines";
+import Scanlines from "@/components/Phosphor/Scanlines";
 import styles from "./bevel.module.css";
 
 const Bevel = ({ children }: PropsWithChildren) => {

@@ -1,4 +1,4 @@
-import type { IScriptScreenContentLinkTarget } from "@/cassette";
+import type { IScriptScreenContentLinkTarget } from "@/components/Phosphor/cassette";
 import NextLink from "next/link";
 import "./style.css";
 

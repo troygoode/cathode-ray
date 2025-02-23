@@ -1,4 +1,4 @@
-import type { ICassette } from "@/cassette";
+import type { ICassette } from "@/components/Phosphor/cassette";
 
 export interface ICassetteEntry {
   key: string;

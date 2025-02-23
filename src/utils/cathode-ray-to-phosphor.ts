@@ -5,7 +5,7 @@ import {
   IScriptDialog,
   TScriptScreenContent,
   IScriptScreenContentToggleOption,
-} from "@/cassette";
+} from "@/components/Phosphor/cassette";
 import { PromptCommand } from "@/cassette-jsx";
 
 interface IContent {

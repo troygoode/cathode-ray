@@ -17,7 +17,7 @@ import type {
   IScriptScreenContentText,
   IScriptScreenContentToggle,
   TScriptScreenContent,
-} from "@/cassette";
+} from "@/components/Phosphor/cassette";
 import cssClass from "@/utils/css-class";
 import createIdGenerator from "@/utils/id-generator";
 
@@ -27,13 +27,13 @@ import {
   ScreenDataState,
   ScreenType,
   DialogType,
-} from "@/components/Phosphor/app-state-enums";
+} from "@/components/Phosphor/PhosphorInstance/app-state-enums";
 import type {
   AppState,
   Screen,
   ScreenData,
   Dialog,
-} from "@/components/Phosphor/app-state";
+} from "@/components/Phosphor/PhosphorInstance/app-state";
 
 // components
 import Teletype from "../Teletype";
