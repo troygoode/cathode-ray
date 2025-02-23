@@ -342,7 +342,7 @@ const Y14AirlockErrorDialog = () => {
   );
 };
 
-export default function () {
+export default function CassetteComponent() {
   return (
     <Cassette
       name="001 The Haunting of Ypsilon-14"

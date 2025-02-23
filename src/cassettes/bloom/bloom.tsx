@@ -626,7 +626,7 @@ const UploadErrorDialog = () => {
   );
 };
 
-export default function () {
+export default function CassetteComponent() {
   return (
     <Cassette
       name="002 Bloom"
