@@ -8,7 +8,7 @@ import {
   Bitmap,
   Dialog,
   Wrapper,
-} from "@/cassette-jsx";
+} from "@/components/CathodeRay/Core";
 
 import logo from "./dyson-phytology.png";
 import murandal from "./murandal.png";

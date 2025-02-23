@@ -9,7 +9,7 @@ import {
   ToggleOption,
   Prompt,
   Dialog,
-} from "@/cassette-jsx";
+} from "@/components/CathodeRay/Core";
 
 import cat from "@/cassettes/phosphor-sample/sample-cat.jpg";
 

@@ -10,7 +10,7 @@ import {
   Prompt,
   Dialog,
   Wrapper,
-} from "@/cassette-jsx";
+} from "@/components/CathodeRay/Core";
 
 import map from "@/cassettes/ypsilon14/ypsilon14-map.png";
 import { PropsWithChildren } from "react";

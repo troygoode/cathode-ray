@@ -6,7 +6,7 @@ import {
   TScriptScreenContent,
   IScriptScreenContentToggleOption,
 } from "@/components/Phosphor/cassette";
-import { PromptCommand } from "@/cassette-jsx";
+import { PromptCommand } from "@/components/CathodeRay/Core";
 
 interface IContent {
   name: string;
