@@ -16,11 +16,11 @@ import map from "@/cassettes/ypsilon14/ypsilon14-map.png";
 import { PropsWithChildren } from "react";
 
 const password = "chapman"; // hat tip to the author of the Haunting of Ypsilon-14: D. G. Chapman
-const today = new Date(2366, 5, 12);
+const today = new Date(2366, 6, 2);
 const names = {
   station: "Ypsilon-14",
   corp: "Ishiyama Dynamics",
-  playerShip: "Tempest",
+  playerShip: "CTV Tempest",
   roster: {
     sonya: "VERHOEVEN, Sonya :: Team Leader",
     ashraf: "SINGH, Ashraf :: Breaker",
@@ -137,7 +137,7 @@ const Home = () => {
       </Line>
       <Line>==========</Line>
       <Br />
-      <Link target="menu">&gt; ACCEPT EULA</Link>
+      <Link target="menu">&gt; ACCEPT EULA & LOGIN</Link>
     </Screen>
   );
 };
@@ -172,8 +172,8 @@ const Diagnostics = () => {
   return (
     <Screen id="diagnostics">
       <Header label="Diagnostics" />
-      <Line>Checking life support.............. Done.</Line>
-      <Line>Checking main systems.............. Done.</Line>
+      <Line>Checking life support.............. OK.</Line>
+      <Line>Checking main systems.............. OK.</Line>
       <Br />
       <Line style="alert">
         WARNING: Airflow 82.4%. Check vents for blockage.
@@ -199,24 +199,44 @@ const Schedule = () => {
       <Line>Docking bay activity (past 6 months):</Line>
       <Br />
       <Line>
-        {formatDate(today)}.0633 - Bay 2 : Arrive :: {names.playerShip}
+        {formatDate(today)}.0633 - Bay 2 : Arrive ::{" "}
+        {names.playerShip.toUpperCase()}
       </Line>
       <Line>
-        {formatDate(subtractDays(today, 14))}.0834 - Bay 1 : Arrive :: Heracles
+        {formatDate(subtractDays(today, 28))}.0834 - Bay 1 : Arrive :: RSV
+        HERACLES
       </Line>
       <Line>
-        {formatDate(subtractDays(today, 85))}.1223 - Bay 1 : Depart :: Key Largo
+        {formatDate(subtractDays(today, 30))}.1223 - Bay 1 : Depart :: CTV HORN
+        OF PLENTY
       </Line>
       <Line>
-        {formatDate(subtractDays(today, 86))}.1604 - Bay 1 : Arrive :: Key Largo
+        {formatDate(subtractDays(today, 31))}.1604 - Bay 1 : Arrive :: CTV HORN
+        OF PLENTY
       </Line>
       <Line>
-        {formatDate(subtractDays(today, 175))}.4823 - Bay 1 : Depart :: Key
-        Largo
+        {formatDate(subtractDays(today, 58))}.1223 - Bay 1 : Depart :: MSV
+        VASQUEZ XV
       </Line>
       <Line>
-        {formatDate(subtractDays(today, 176))}.8771 - Bay 1 : Arrive :: Key
-        Largo
+        {formatDate(subtractDays(today, 59))}.1604 - Bay 1 : Arrive :: MSV
+        VASQUEZ XV
+      </Line>
+      <Line>
+        {formatDate(subtractDays(today, 84))}.1223 - Bay 1 : Depart :: CTV HORN
+        OF PLENTY
+      </Line>
+      <Line>
+        {formatDate(subtractDays(today, 85))}.1604 - Bay 1 : Arrive :: CTV HORN
+        OF PLENTY
+      </Line>
+      <Line>
+        {formatDate(subtractDays(today, 128))}.1223 - Bay 1 : Depart :: MSV
+        VASQUEZ XV
+      </Line>
+      <Line>
+        {formatDate(subtractDays(today, 129))}.1604 - Bay 1 : Arrive :: MSV
+        VASQUEZ XV
       </Line>
       <Back target="menu" />
     </Screen>
@@ -248,18 +268,18 @@ const Comms = () => {
       <Header label="Comms" />
       <Line>2 vessels detected in proximity.</Line>
       <Br />
-      <Link target="hailtempest">
+      <Link target="hailplayership">
         &gt; HAIL {names.playerShip.toUpperCase()}
       </Link>
-      <Link target="hailheracles">&gt; HAIL HERACLES</Link>
+      <Link target="hailheracles">&gt; HAIL RSV HERACLES</Link>
       <Back target="menu" />
     </Screen>
   );
 };
 
-const HailTempest = () => {
+const HailPlayerShip = () => {
   return (
-    <Screen id="hailtempest">
+    <Screen id="hailplayership">
       <Header label="Transmitting" />
       <Line>..........................................</Line>
       <Line>..........................................</Line>
@@ -281,7 +301,7 @@ const HailHeracles = () => {
       <Line>..........................................</Line>
       <Line>..........................................</Line>
       <Br />
-      <Line style="alert">NO RESPONSE FROM HERACLES</Line>
+      <Line style="alert">NO RESPONSE FROM RSV HERACLES</Line>
       <Back target="comms" label="Close Channel" />
     </Screen>
   );
@@ -352,6 +372,7 @@ const Airlocks = () => {
       <Toggle>
         <ToggleOption>&gt; DOCKING BAY 2 :: UNLOCKED</ToggleOption>
         <ToggleOption>&gt; DOCKING BAY 2 :: LOCKED</ToggleOption>
+        <ToggleOption>&gt; MINE SHAFT :: UNLOCKED</ToggleOption>
       </Toggle>
       <Back target="controlsunlocked" />
     </Screen>
@@ -521,7 +542,7 @@ export default function Ypsilon14() {
       <Schedule />
       <Roster />
       <Comms />
-      <HailTempest />
+      <HailPlayerShip />
       <HailHeracles />
       <Controls />
       <ControlsUnlocked />

@@ -3,6 +3,7 @@ export interface IScriptScreenContentBitmap {
   src: string;
   alt?: string;
   className?:
+    | "transparent-bg"
     | "monochrome"
     | "luminosity"
     | "lighten"

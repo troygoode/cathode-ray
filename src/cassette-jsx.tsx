@@ -51,7 +51,7 @@ export type LinkTarget = {
   shiftKey?: boolean;
 };
 export type LinkProps = {
-  target: string | LinkTarget[];
+  target: string | LinkTarget[] | LinkTarget;
   style?: "alert";
 };
 function CathodeRay_Link(props: PropsWithChildren<LinkProps>) {
@@ -64,6 +64,7 @@ export { CathodeRay_Link as Link };
 export type BitmapProps = {
   src: string;
   style?:
+    | "transparent-bg"
     | "monochrome"
     | "luminosity"
     | "lighten"

@@ -2,6 +2,10 @@
   display: inline-block;
   background-color: var(--background);
 }
+.bitmap-wrapper.transparent-bg {
+  display: inline-block;
+  background-color: transparent;
+}
 .__image__ {
   .progressbar {
     &::after {
