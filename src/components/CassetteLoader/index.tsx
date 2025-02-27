@@ -43,14 +43,12 @@ export default async function Page(props: TCassetteLoaderProps) {
   }
 
   return (
-    <>
-      <Phosphor
-        cassette={cassette}
-        cassetteKey={key}
-        activeScreen={decoded.screen}
-        activeDialog={decoded.dialog}
-      />
-    </>
+    <Phosphor
+      cassette={cassette}
+      cassetteKey={key}
+      activeScreen={decoded.screen}
+      activeDialog={decoded.dialog}
+    />
   );
 }
 

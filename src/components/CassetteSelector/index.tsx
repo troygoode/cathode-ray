@@ -21,6 +21,7 @@ const text = (s: string, css?: string): TScriptScreenContent => {
     text: s,
   };
 };
+
 const link = (
   text: string,
   target: string,
@@ -45,7 +46,7 @@ function generateCassetteSelectionList(
     return a.meta.name.localeCompare(b.meta.name);
   });
   for (const cassette of sortedCassettes) {
-    result.push("\n");
+    result.push("");
     result.push(
       link(`> ${cassette.meta.name}`, `/c/${encode(cassette.meta.name)}`)
     );
@@ -54,11 +55,7 @@ function generateCassetteSelectionList(
     }
     if (cassette.meta.website?.length) {
       result.push(
-        link(
-          `* Website: ${cassette.meta.website}`,
-          cassette.meta.website,
-          "w-full text-nowrap text-ellipsis"
-        )
+        link(`* Website: ${cassette.meta.website}`, cassette.meta.website)
       );
     }
     if (cassette.meta.comment?.length) {
@@ -75,7 +72,8 @@ const logoBitmap: IScriptScreenContentBitmap = {
 };
 const forkMe = link(
   "Fork me on Github! https://github.com/troygoode/cathode-ray",
-  "https://github.com/troygoode/cathode-ray"
+  "https://github.com/troygoode/cathode-ray",
+  "break-all"
 );
 
 function createMetaCassette(cassettes: ICassette[], screen: string): ICassette {
@@ -85,9 +83,9 @@ function createMetaCassette(cassettes: ICassette[], screen: string): ICassette {
     content: [
       logoBitmap,
       forkMe,
-      "\n",
+      "",
       text("FOR KEEPERS' EYES ONLY!", "alert"),
-      text("======================="),
+      text("=============="),
       text("Enter security code to proceed:"),
       {
         type: "prompt",
@@ -112,9 +110,9 @@ function createMetaCassette(cassettes: ICassette[], screen: string): ICassette {
     content: [
       logoBitmap,
       forkMe,
-      "\n",
+      "",
       text("SELECT A CASSETTE TO LOAD:"),
-      text("=========================="),
+      text("=============="),
       generateCassetteSelectionList(cassettes),
     ].flat(),
   };

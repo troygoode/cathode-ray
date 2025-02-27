@@ -33,10 +33,7 @@
   );
 
   --font-family: "Vga", Menlo, Monaco, Consolas, "Courier New", monospace;
-
-  --scalefactor: 2;
-  --fontsize: calc(24px * var(--scalefactor));
-  --lineheight: calc(19px * var(--scalefactor));
+  --lineheight: calc(19px * 2);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,8 +46,6 @@
 html,
 body {
   font-family: var(--font-family);
-  font-size: var(--fontsize);
-  line-height: var(--lineheight);
   color: var(--foreground);
 
   user-select: none;

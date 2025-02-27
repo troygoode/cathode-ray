@@ -1,10 +1,11 @@
+import React, { FC, useEffect, useRef, RefObject, useState } from "react";
 import type {
   IScriptScreenContentPromptCommand,
   IScriptScreenContentPromptCommandAction,
 } from "@/components/Phosphor/cassette";
-import "./style.css";
+import { cn } from "@/utils/utils";
 
-import React, { FC, useEffect, useRef, RefObject, useState } from "react";
+import "./style.css";
 
 export interface PromptProps {
   prompt?: string;
@@ -38,13 +39,34 @@ const Prompt: FC<PromptProps> = (props) => {
   const [value, setValue] = useState("");
 
   // events
-  const handleFocus = () => ref.current.focus();
+  const handleFocus = () => {
+    ref.current.focus();
+  };
+
+  const handleMobileFocus = () => {
+    if (!onCommand) {
+      return;
+    }
+
+    const input = window.prompt("ENTER TERMINAL INPUT");
+    if (!input) {
+      return;
+    }
+
+    const sanitized = input.toLowerCase().trim();
+    const command = commands?.find((element) => element.command === sanitized);
+    if (command) {
+      onCommand(sanitized, command.action);
+    }
+  };
 
   const handleCommand = () => {
     if (!onCommand) {
       return;
     }
 
+    console.log(commands);
+    console.log(value);
     const command = commands?.find((element) => element.command === value);
     setValue("");
 
@@ -96,12 +118,20 @@ const Prompt: FC<PromptProps> = (props) => {
   });
 
   return (
-    <div className={css} onClick={handleFocus}>
-      {prompt && <span className={"prompt"}>{prompt}</span>}
-      <span className={"input"} ref={ref}>
-        {value}
-      </span>
-    </div>
+    <>
+      <div className={cn(css, "block lg:hidden")} onClick={handleMobileFocus}>
+        {prompt && <span className={"prompt"}>{prompt}</span>}
+        <span className={"input"} ref={ref}>
+          {value}
+        </span>
+      </div>
+      <div className={cn(css, "hidden lg:block")} onClick={handleFocus}>
+        {prompt && <span className={"prompt"}>{prompt}</span>}
+        <span className={"input"} ref={ref}>
+          {value}
+        </span>
+      </div>
+    </>
   );
 };
 

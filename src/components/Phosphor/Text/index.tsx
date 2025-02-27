@@ -8,7 +8,9 @@ export interface TextProps {
 
 const Text: FC<TextProps> = (props) => {
   const { text, className, onRendered } = props;
-  const css = ["__text__", className ? className : null].join(" ").trim();
+  const css = ["__text__ w-full text-wrap", className ? className : null]
+    .join(" ")
+    .trim();
 
   // events
   const handleRendered = () => onRendered && onRendered();

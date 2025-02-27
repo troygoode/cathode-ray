@@ -66,7 +66,13 @@ const Link: FC<LinkProps> = (props) => {
     (target as IScriptScreenContentLinkTarget).type === "href"
   ) {
     const { text, className } = props;
-    const css = ["__link__", className ? className : null].join(" ").trim();
+    const css = [
+      "__link__",
+      "w-full text-wrap break-all",
+      className ? className : null,
+    ]
+      .join(" ")
+      .trim();
     return (
       <NextLink
         href={(target as IScriptScreenContentLinkTarget).target}

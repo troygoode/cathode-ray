@@ -8,11 +8,21 @@ export function repeatString(str: string, num: number) {
   return new Array(num + 1).join(str);
 }
 
+export function Hr({
+  length = 28,
+  char = "=",
+}: {
+  length?: number;
+  char?: string;
+}) {
+  return <Core.Line>{repeatString(char, length)}</Core.Line>;
+}
+
 export function Header({ label }: { label: string }) {
   return (
     <Core.Wrapper>
       <Core.Line>{label.toUpperCase()}</Core.Line>
-      <Core.Line>{repeatString("=", label.length)}</Core.Line>
+      <Hr length={label.length} />
       <Core.Br />
     </Core.Wrapper>
   );
@@ -36,7 +46,7 @@ export function Back({
   return (
     <Core.Wrapper>
       <Core.Br />
-      <Core.Line>{repeatString("=", 30)}</Core.Line>
+      <Hr />
       <Core.Link target={target}>&lt; {label.toUpperCase()}</Core.Link>
     </Core.Wrapper>
   );
@@ -52,7 +62,7 @@ export function Next({
   return (
     <Core.Wrapper>
       <Core.Br />
-      <Core.Line>{repeatString("=", 30)}</Core.Line>
+      <Hr />
       <Core.Link target={target}>&gt; {label.toUpperCase()}</Core.Link>
     </Core.Wrapper>
   );
