@@ -32,7 +32,10 @@ const Agenda = (props: IAgendaProps) => {
         together to keep the wolves at bay while you work your way back into the
         black.
       </P>
-      <P>If you bring some friends along you can split it I guess.</P>
+      <P>
+        If you bring some friends along you can split the reward I guess. Up to
+        you.
+      </P>
       <P>Your new best friend in the galaxy: ANGUS</P>
     </Screen>
   );

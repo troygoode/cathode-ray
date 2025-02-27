@@ -15,9 +15,9 @@ const Agenda = (props: IAgendaProps) => {
       <Line>SUBJECT.... {subject}</Line>
       <Br />
       <P>
-        News has reached us that there is a potential union organizer on
+        News has reached us that there is a potential union organizer on{" "}
         {props.stationName}. Upper brass is going ape shit. Fool must be making
-        an awful lot of waves to get noticed from such a small rock. Glad
+        an awful lot of waves to get noticed from such a backwater. Glad
         we&apos;ve got a tough on board like you so we can nip this in the bud.
       </P>
       <P>
@@ -30,11 +30,11 @@ const Agenda = (props: IAgendaProps) => {
         We have no preference on your methods and leave it up to your
         professional discretion, but keep in mind we do need to trace where
         their support is coming from. That rock is too small to have the credit
-        flow we&apos;re seeing; make sure you identify the purse strings too.
+        flow we&apos;re seeing; make sure you identify those purse strings.
       </P>
       <P>We trust you will be discreet.</P>
-      <Line>AUTHORIZATION NAME: [REDACTED]</Line>
-      <Line>AUTHORIZATION CODE: [REDACTED]</Line>
+      <Line>AUTHORIZATION ID..... [REDACTED]</Line>
+      <Line>AUTHORIZATION CODE... [REDACTED]</Line>
       <Line>&#x2713; AUTHORIZATION CONFIRMED</Line>
     </Screen>
   );

@@ -16,7 +16,8 @@ const Agenda = (props: IAgendaProps) => {
       <Br />
       <P>URGENT</P>
       <P>
-        IT IS IMPERATIVE THAT THE BREACH ON {props.stationName} DOES NOT SPREAD
+        IT IS IMPERATIVE THAT THE BREACH ON {props.stationName.toUpperCase()}{" "}
+        DOES NOT SPREAD
       </P>
       <Line>&bull; Cr.20k TRANSFER AUTHORIZED UPON COMPLETION</Line>
       <Line>&bull; LETHAL FORCE AUTHORIZED</Line>

@@ -19,16 +19,16 @@ const Agenda = (props: IAgendaProps) => {
         touch down on that {props.stationName} rock. I need your help.
       </P>
       <P>
-        You might&apos;ve already heard a rumor that some of our team has
-        potentially been involved in some light drug smuggling. Well, the suits
-        are starting to sniff around looking for who it is and obviously
-        it&apos;d be better for us if we deal with it before the suits find
-        them. I don&apos;t know exactly who all is involved, but I did track
-        down {props.stationName} as the place where they&apos;re clearing the
-        shit through on supply runs like yours. My ol&apos; pal Mike there seems
-        to know more than he was willing to tell me but he is too damned dumb to
-        be doing this all on his lonesome. Lean on him to start with and see if
-        he cracks.
+        You might&apos;ve already heard a rumor that some folks on our team have
+        been involved in a bit of light drug smuggling. Well, the suits are
+        starting to sniff around looking for who it is and obviously it&apos;d
+        be better for us all if we deal with it before the suits find them. I
+        don&apos;t know exactly who all is involved, but I did track down{" "}
+        {props.stationName} as the place where they&apos;re clearing the shit
+        through on supply runs like yours. My ol&apos; pal Mike there seems to
+        know more than he was willing to tell me &mdash; but he is too damned
+        dumb to be doing this all on his lonesome. Lean on him to start with and
+        see if he cracks.
       </P>
       <P>
         If you find out who it is, either convince them to destroy the narcotics

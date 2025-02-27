@@ -7,7 +7,7 @@ const title = "Steal Research (Scientist)";
 
 const Agenda = (props: IAgendaProps) => {
   const from = `b.lorenz@${props.companyEmailDomain}`;
-  const subject = `IMPORTANT: ${props.stationName}`;
+  const subject = `IMPORTANT: ${props.stationName}`.toUpperCase();
   return (
     <Screen id={id}>
       <Line>FROM....... {from}</Line>
@@ -16,7 +16,7 @@ const Agenda = (props: IAgendaProps) => {
       <Br />
       <P>We have a problem.</P>
       <P>
-        Rumor has it that they found something incredible down in the mines on
+        Rumor has it that they found something incredible down in the mines on{" "}
         {props.stationName}; something that apparently will secure funding for
         Georgiann&apos;s research team for the next ten cycles... Needless to
         say, if they get that funding our team will be history &mdash; I need
