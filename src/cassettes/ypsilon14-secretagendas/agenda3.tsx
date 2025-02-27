@@ -7,7 +7,7 @@ const title = "Union Busting (Military)";
 
 const Agenda = (props: IAgendaProps) => {
   const from = `[REDACTED]@${props.companyEmailDomain}`;
-  const subject = `TOP SECRET: ${props.companyName.toUpperCase()}`;
+  const subject = `TOPSECRET: ${props.companyName.toUpperCase()}`;
   return (
     <Screen id={id}>
       <Line>FROM....... {from}</Line>

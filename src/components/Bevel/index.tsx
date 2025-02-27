@@ -2,9 +2,14 @@ import { PropsWithChildren } from "react";
 import Scanlines from "@/components/Phosphor/Scanlines";
 import styles from "./bevel.module.css";
 
-const Bevel = ({ children }: PropsWithChildren) => {
+const Bevel = ({
+  children,
+  ...props
+}: PropsWithChildren<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+>) => {
   return (
-    <>
+    <div {...props}>
       <div className={`${styles.content}`}>
         {children}
         <div
@@ -19,7 +24,7 @@ const Bevel = ({ children }: PropsWithChildren) => {
           ></div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

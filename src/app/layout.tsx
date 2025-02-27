@@ -19,7 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Bevel>{children}</Bevel>
+        <Bevel className="hidden lg:block">{children}</Bevel>
+        <div className="block lg:hidden">{children}</div>
       </body>
     </html>
   );

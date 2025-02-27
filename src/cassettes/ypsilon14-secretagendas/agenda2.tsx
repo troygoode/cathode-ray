@@ -7,7 +7,7 @@ const title = "Recover Research (Android)";
 
 const Agenda = (props: IAgendaProps) => {
   const from = `g.tyrell@${props.companyEmailDomain}`;
-  const subject = "01011001 00101101 00110001 00110100";
+  const subject = "0101100100101101 0011000100110100";
   return (
     <Screen id={id}>
       <Line>FROM....... {from}</Line>
@@ -15,7 +15,7 @@ const Agenda = (props: IAgendaProps) => {
       <Line>SUBJECT.... {subject}</Line>
       <Br />
       <Line>ALTERATION TO MISSION OBJECTIVES DOWNLOADED</Line>
-      <P>FIRMWARE UPDATING............................</P>
+      <P>FIRMWARE UPDATING...</P>
       <Line>
         &bull; MAINTAIN ORIGINAL OBJECTIVES ABOARD {props.playerShipName}
       </Line>
