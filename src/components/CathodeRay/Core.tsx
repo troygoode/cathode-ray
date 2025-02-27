@@ -53,6 +53,7 @@ export type LinkTarget = {
 export type LinkProps = {
   target: string | LinkTarget[] | LinkTarget;
   style?: "alert";
+  className?: string;
 };
 function CathodeRay_Link(props: PropsWithChildren<LinkProps>) {
   return props.children;

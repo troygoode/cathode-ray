@@ -1,5 +1,6 @@
-export { default as SamplePhosphor } from "./phosphor-sample/sample";
-export { default as Ypsilon14Phosphor } from "./phosphor-ypsilon14/ypsilon14";
-export { default as Bloom } from "./bloom/bloom";
+export { default as SamplePhosphor } from "@/cassettes/phosphor-sample";
+export { default as Ypsilon14Phosphor } from "@/cassettes/phosphor-ypsilon14";
+export { default as Bloom } from "@/cassettes/bloom";
 
-export { default as Ypsilon } from "./ypsilon14/ypsilon14";
+export { default as Ypsilon } from "@/cassettes/ypsilon14";
+export { default as YpsilonSecretAgendas } from "@/cassettes/ypsilon14-secretagendas";

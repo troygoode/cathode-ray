@@ -3,7 +3,7 @@
 import styles from "./phosphor.module.css";
 
 import React, { Component, ReactElement } from "react";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import { encode } from "@/utils/hex";
 
 import type {
@@ -569,7 +569,10 @@ class Phosphor extends Component<PhosphorProps, AppState> {
   }
 
   private _changeScreen(targetScreen: string): void {
-    redirect(`/c/${this.props.cassetteKey}/${encode(targetScreen)}`);
+    redirect(
+      `/c/${this.props.cassetteKey}/${encode(targetScreen)}`,
+      RedirectType.push
+    );
 
     // // todo: handle missing screen
     // // unload the current screen first

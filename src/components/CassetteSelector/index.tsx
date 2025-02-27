@@ -21,9 +21,14 @@ const text = (s: string, css?: string): TScriptScreenContent => {
     text: s,
   };
 };
-const link = (text: string, target?: string): TScriptScreenContent => {
+const link = (
+  text: string,
+  target: string,
+  className?: string
+): TScriptScreenContent => {
   return {
     type: "link",
+    className,
     target: {
       type: "href",
       target: target || text,
@@ -49,7 +54,11 @@ function generateCassetteSelectionList(
     }
     if (cassette.meta.website?.length) {
       result.push(
-        link(`* Website: ${cassette.meta.website}`, cassette.meta.website)
+        link(
+          `* Website: ${cassette.meta.website}`,
+          cassette.meta.website,
+          "w-full text-nowrap text-ellipsis"
+        )
       );
     }
     if (cassette.meta.comment?.length) {
