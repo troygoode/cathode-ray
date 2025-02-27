@@ -31,9 +31,13 @@ export async function generateMetadata(
 
 export default async function Page(props: TCassetteLoaderProps) {
   const { key, screen, dialog } = await props.params;
-  const decoded = decode(key);
+  const decoded = {
+    key: decode(key),
+    screen: screen && decode(screen),
+    dialog: dialog && decode(dialog),
+  };
 
-  const cassette = cassettes.find((c) => c.meta.name === decoded);
+  const cassette = cassettes.find((c) => c.meta.name === decoded.key);
   if (!cassette) {
     return notFound();
   }
@@ -43,8 +47,8 @@ export default async function Page(props: TCassetteLoaderProps) {
       <Phosphor
         cassette={cassette}
         cassetteKey={key}
-        activeScreen={screen}
-        activeDialog={dialog}
+        activeScreen={decoded.screen}
+        activeDialog={decoded.dialog}
       />
     </>
   );
@@ -87,12 +91,19 @@ export function generateStaticParamsInternal(output: "c" | "c+s" | "c+s+d") {
     }
     for (const screen of c.screens) {
       if (output === "c+s") {
-        results.push({ key: encode(c.key), screen });
+        results.push({
+          key: encode(c.key),
+          screen: encode(screen),
+        });
         continue;
       }
       if (output === "c+s+d") {
         for (const dialog of c.dialogs) {
-          results.push({ key: encode(c.key), screen, dialog });
+          results.push({
+            key: encode(c.key),
+            screen: encode(screen),
+            dialog: encode(dialog),
+          });
         }
       }
     }

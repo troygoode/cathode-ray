@@ -4,6 +4,7 @@ import styles from "./phosphor.module.css";
 
 import React, { Component, ReactElement } from "react";
 import { redirect } from "next/navigation";
+import { encode } from "@/utils/hex";
 
 import type {
   ICassette,
@@ -568,7 +569,7 @@ class Phosphor extends Component<PhosphorProps, AppState> {
   }
 
   private _changeScreen(targetScreen: string): void {
-    redirect(`/c/${this.props.cassetteKey}/${targetScreen}`);
+    redirect(`/c/${this.props.cassetteKey}/${encode(targetScreen)}`);
 
     // // todo: handle missing screen
     // // unload the current screen first
@@ -708,13 +709,17 @@ class Phosphor extends Component<PhosphorProps, AppState> {
       window.history.pushState(
         {},
         "",
-        `/c/${this.props.cassetteKey}/${this.state.activeScreenId}/${dialogId}`
+        `/c/${this.props.cassetteKey}/${encode(
+          this.state.activeScreenId || ""
+        )}/${encode(dialogId)}`
       );
     } else {
       window.history.pushState(
         {},
         "",
-        `/c/${this.props.cassetteKey}/${this.state.activeScreenId}`
+        `/c/${this.props.cassetteKey}/${encode(
+          this.state.activeScreenId || ""
+        )}`
       );
     }
     // TODO: check if targetDialog is a valid dialog
