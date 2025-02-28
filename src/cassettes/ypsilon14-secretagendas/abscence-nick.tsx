@@ -20,12 +20,12 @@ const Agenda = (props: IAgendaProps) => {
       <P>
         {props.playerShipName}&apos;s onboard medical analysis systems have
         confirmed that your current health status poses an unreasonable risk to
-        the mission. Please return to cryo statis; we will instruct the crew to
+        the mission. Please return to cryo stasis; we will instruct the crew to
         perform their duties without you.
       </P>
       <P>Your PTO balance and pay have been docked correspondingly.</P>
       <Line>Warden</Line>
-      <P>{props.companyEmailDomain}&copy; Human Resources</P>
+      <P>{props.companyName}&copy; Human Resources</P>
       <Bitmap src={getwell.src} style="luminosity" />
     </Screen>
   );
