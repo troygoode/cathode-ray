@@ -26,7 +26,7 @@ const Agenda = (props: IAgendaProps) => {
       <P>Your PTO balance and pay have been docked correspondingly.</P>
       <Line>Warden</Line>
       <P>{props.companyEmailDomain}&copy; Human Resources</P>
-      <Bitmap src={getwell.src} style="color-dodge" />
+      <Bitmap src={getwell.src} style="luminosity" />
     </Screen>
   );
 };
