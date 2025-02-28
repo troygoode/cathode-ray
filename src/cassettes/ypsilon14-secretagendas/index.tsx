@@ -10,6 +10,7 @@ import Agenda5 from "./agenda5";
 import Agenda6 from "./agenda6";
 import Agenda7 from "./agenda7";
 import Agenda8 from "./agenda8";
+import AbsenceNick from "./abscence-nick";
 
 const constants: IAgendaProps = {
   stationName: "Ypsilon-14",
@@ -36,6 +37,7 @@ export default function CassetteComponent() {
         <Link target={Agenda6.id}>06. {Agenda6.title}</Link>
         <Link target={Agenda7.id}>07. {Agenda7.title}</Link>
         <Link target={Agenda8.id}>08. {Agenda8.title}</Link>
+        <Link target={AbsenceNick.id}>99. {AbsenceNick.title}</Link>
       </Screen>
       <Agenda1.Agenda {...constants} />;
       <Agenda2.Agenda {...constants} />
@@ -45,6 +47,7 @@ export default function CassetteComponent() {
       <Agenda6.Agenda {...constants} />
       <Agenda7.Agenda {...constants} />
       <Agenda8.Agenda {...constants} />
+      <AbsenceNick.Agenda {...constants} />
     </Cassette>
   );
 }
