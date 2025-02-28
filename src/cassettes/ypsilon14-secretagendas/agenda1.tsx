@@ -32,7 +32,7 @@ const Agenda = (props: IAgendaProps) => {
       <P>Bill</P>
       <P>
         P.S. Watch out for anyone from from Georgiann&apos;s team. She has been
-        making waves about ncreased funding and politicking with the leadership
+        making waves about increased funding and politicking with the leadership
         overseeing android maintenance &mdash; so could possibly also be a
         skinjob onboard. I&apos;m sure she will try something soon. She knows
         the clock is ticking and needs that research under lock &amp; key ASAP.

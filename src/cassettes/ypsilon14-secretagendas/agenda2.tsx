@@ -17,7 +17,8 @@ const Agenda = (props: IAgendaProps) => {
       <Line>ALTERATION TO MISSION OBJECTIVES DOWNLOADED</Line>
       <P>FIRMWARE UPDATING...</P>
       <Line>
-        &bull; MAINTAIN ORIGINAL OBJECTIVES ABOARD {props.playerShipName}
+        &bull; MAINTAIN ORIGINAL OBJECTIVES ABOARD{" "}
+        {props.playerShipName.toUpperCase()}
       </Line>
       <Line>&bull; ADDITIONAL OBJECTIVES PROCESSED:</Line>
       <Line>
@@ -29,8 +30,7 @@ const Agenda = (props: IAgendaProps) => {
         ANALYSIS
       </Line>
       <Line>
-        ... &bull; ENSURE SAFETY OF {props.stationName.toUpperCase()} PERSONNEL;
-        THEY ARE NEEDED FOR QUESTIONNING
+        ... &bull; ENSURE SAFETY OF {props.stationName.toUpperCase()} BASE STAFF
       </Line>
       <Line>... &bull; MAINTAIN COVER</Line>
       <Br />
