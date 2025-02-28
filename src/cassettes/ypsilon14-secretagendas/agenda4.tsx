@@ -45,7 +45,8 @@ const Agenda = (props: IAgendaProps) => {
         done right by me. Look &mdash; if you can get the stuff off{" "}
         {props.stationName} and over to Prospero&apos;s Dream you could make a
         killing. Waaay more than Cr.5k, but it is your ass if you get caught. I
-        suggest you just destroy it and come on back...
+        suggest you just destroy it and come on back... but if you do go this
+        route, do me a favor and give Mike a ride too will ya? I owe him one.
       </P>
     </Screen>
   );

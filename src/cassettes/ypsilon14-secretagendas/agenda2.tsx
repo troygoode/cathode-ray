@@ -28,11 +28,11 @@ const Agenda = (props: IAgendaProps) => {
         ... &bull; RETURN DR. GIOVANI&apos;S RESEARCH TO OUR LAB FOR FURTHER
         ANALYSIS
       </Line>
-      <Line>... &bull; MAINTAIN COVER</Line>
       <Line>
-        ... &bull; ELIMINATION OF HUMANS AUTHORIZED ONLY IN THE EVENT OF MISSION
-        INTERFERENCE
+        ... &bull; ENSURE SAFETY OF {props.stationName.toUpperCase()} PERSONNEL;
+        THEY ARE NEEDED FOR QUESTIONNING
       </Line>
+      <Line>... &bull; MAINTAIN COVER</Line>
       <Br />
       <Line>AUTHORIZATION NAME:</Line>
       <P>GEORGIANN TYRELL</P>
